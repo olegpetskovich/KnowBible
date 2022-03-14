@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <com.app.bible.knowbible.mvvm.view.theme_editor.MyRelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/bubbleboddy_neue_trial_light_cyr"
+                android:text="@string/tv_in_development"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationViewInDevelopment"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center_horizontal"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/in_development_two" />
+        </LinearLayout>
+    </com.app.bible.knowbible.mvvm.view.theme_editor.MyRelativeLayout>
+</androidx.core.widget.NestedScrollView>
+
+    <!-- Пока ведётся разработка над функцией Толкование, код внешнего вида будет закомментирован и будет отображаться лишь анимация -->
+    <!--<com.android.bible.knowbible.mvvm.view.theme_editor.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:orientation="vertical">-->
+
+
+    <!--    <com.android.bible.knowbible.mvvm.view.theme_editor.MyTabLayout-->
+    <!--        android:id="@+id/tabLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:tabGravity="fill"-->
+    <!--        app:tabIndicatorColor="@color/colorPrimary"-->
+    <!--        app:tabIndicatorHeight="2dp"-->
+    <!--        app:tabMode="fixed"-->
+    <!--        app:tabSelectedTextColor="@color/colorPrimary"-->
+    <!--        app:tabTextAppearance="@style/TabTextOptions"-->
+    <!--        app:tabTextColor="@color/colorGray" />-->
+
+    <!--    <androidx.viewpager.widget.ViewPager-->
+    <!--        android:id="@+id/viewPager"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scrollbars="none"-->
+    <!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+    <!--</com.android.bible.knowbible.mvvm.view.theme_editor.MyLinearLayout>-->

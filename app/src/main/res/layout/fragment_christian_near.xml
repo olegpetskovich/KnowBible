@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.app.bible.knowbible.mvvm.view.theme_editor.MyNestedScrollViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent">
+
+            <LinearLayout
+                android:id="@+id/networksLinksLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/telegramLottieAnim"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/telegram_lottie" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/instagramLottieAnim"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/instagram_lottie"
+                    app:lottie_speed="1.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/networksLinksBtns"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/telegramBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="50dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/instagramBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="50dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/networksLinksLay"
+                android:layout_centerHorizontal="true">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/emailLottieAnim"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"
+                    app:lottie_rawRes="@raw/email_lottie"
+                    app:lottie_speed="1.0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/emailBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="50dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="50dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</com.app.bible.knowbible.mvvm.view.theme_editor.MyNestedScrollViewLayout>
+

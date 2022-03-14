@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?><!--По какой-то причине только на дефолтный LinearLayout получается установить атрибут background="?attr/selectableItemBackground". Если менять на кастомный, то не устанавливается-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/themeCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="10dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/layoutTheme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationThemeImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <!-- Эта AnimationView необходимо для горихонтального положения экрана, чтобы при установке картинки, не возникала ошибка, для вертикального экрана это View не нужно, поэтому у него видимость gone-->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationThemeImage2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:id="@+id/themeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/animationThemeImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:textSize="66sp"
+            tools:text="Светлая тема" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyTheme"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/themeName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:padding="22dp"
+            android:text="@string/btn_apply"
+            android:textAllCaps="false"
+            android:textSize="46sp"
+            android:textStyle="bold"
+            app:cornerRadius="22dp" />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
+

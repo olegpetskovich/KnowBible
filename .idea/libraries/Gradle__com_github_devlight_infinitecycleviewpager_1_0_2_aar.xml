@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.devlight:infinitecycleviewpager:1.0.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/edd7f05956e4b09baf7921811cc3ce1a/transformed/jetified-infinitecycleviewpager-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/edd7f05956e4b09baf7921811cc3ce1a/transformed/jetified-infinitecycleviewpager-1.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/edd7f05956e4b09baf7921811cc3ce1a/transformed/jetified-infinitecycleviewpager-1.0.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.devlight/infinitecycleviewpager/1.0.2/374882e34d162f92869c52b40ac5067083e9eda3/infinitecycleviewpager-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.devlight/infinitecycleviewpager/1.0.2/14a7b19962fb75179bc62e764b2063635335c856/infinitecycleviewpager-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

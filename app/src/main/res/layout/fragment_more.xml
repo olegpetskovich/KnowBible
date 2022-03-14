@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.app.bible.knowbible.mvvm.view.theme_editor.MyNestedScrollViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <RelativeLayout
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            tools:ignore="RtlSymmetry">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_settings" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/tvSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/ivSettings"
+                android:text="@string/tv_settings"
+                android:textSize="18sp" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyView
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/tvSettings"
+                android:layout_alignStart="@id/tvSettings"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="1dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnHighlightedVerses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            tools:ignore="RtlSymmetry">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/ivHighlightedVerses"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_highlighted_verses" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/tvHighlightedVerses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/ivHighlightedVerses"
+                android:text="@string/tv_highlighted_verses"
+                android:textSize="18sp" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyView
+                android:id="@+id/viewHighlightedVerses"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/tvHighlightedVerses"
+                android:layout_alignStart="@id/tvHighlightedVerses"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="1dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnContactUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            tools:ignore="RtlSymmetry">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/ivContactUs"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_contact_us" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/tvContactUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/ivContactUs"
+                android:text="@string/tv_contact_us"
+                android:textSize="18sp" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyView
+                android:id="@+id/viewContactUs"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/tvContactUs"
+                android:layout_alignStart="@id/tvContactUs"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="1dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            tools:ignore="RtlSymmetry">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/ivPrivacyPolicy"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_privacy_policy" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/tvPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/ivPrivacyPolicy"
+                android:text="@string/tv_privacy_policy"
+                android:textSize="18sp" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyView
+                android:id="@+id/viewPrivacyPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_below="@id/tvPrivacyPolicy"
+                android:layout_alignStart="@id/tvPrivacyPolicy"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="1dp" />
+        </RelativeLayout>
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/btnDonate"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="?attr/selectableItemBackground"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingTop="20dp"-->
+<!--            tools:ignore="RtlSymmetry">-->
+
+<!--            <com.android.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
+<!--                android:id="@+id/ivDonate"-->
+<!--                android:layout_width="22dp"-->
+<!--                android:layout_height="22dp"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:src="@drawable/ic_donation" />-->
+
+<!--            <com.android.bible.knowbible.mvvm.view.theme_editor.MyTextView-->
+<!--                android:id="@+id/tvDonate"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_toEndOf="@id/ivDonate"-->
+<!--                android:text="@string/tv_donate"-->
+<!--                android:textSize="18sp" />-->
+
+<!--            <com.android.bible.knowbible.mvvm.view.theme_editor.MyView-->
+<!--                android:id="@+id/viewDonate"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0.8dp"-->
+<!--                android:layout_below="@id/tvDonate"-->
+<!--                android:layout_alignStart="@id/tvDonate"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:paddingBottom="1dp" />-->
+<!--        </RelativeLayout>-->
+    </LinearLayout>
+</com.app.bible.knowbible.mvvm.view.theme_editor.MyNestedScrollViewLayout>

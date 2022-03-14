@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <TextView
+        android:id="@+id/tvVerseNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tvVerse"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/colorGray"
+        android:textStyle="bold"
+        android:textSize="10.5sp"
+        tools:ignore="SmallSp"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tvVerse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layerType="software"
+        android:lineSpacingExtra="6dp"
+        android:textSize="18sp"
+        tools:text="В начале Бог сотворил небо и землю. Земля же была безвидна и пуста, и тьма над бездною." />
+
+<!--    <com.android.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
+<!--        android:id="@+id/noteIcon"-->
+<!--        android:layout_width="25dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        app:srcCompat="@drawable/ic_write_note"-->
+<!--        android:layout_alignBottom="@id/tvVerse"-->
+<!--        android:layout_toEndOf="@id/tvVerse"/>-->
+</RelativeLayout>

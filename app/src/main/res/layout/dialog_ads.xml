@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.app.bible.knowbible.mvvm.view.theme_editor.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/_10sdp"
+    android:paddingVertical="@dimen/_10sdp">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContainerBookInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/myText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:padding="@dimen/_6sdp"
+                android:text="@string/text_ask_ads"
+                android:textSize="@dimen/_14sdp" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/myQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:padding="@dimen/_6sdp"
+                android:text="@string/question_ask_ads"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_60sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorRedLight"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:rippleColor="@color/colorRed">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/_10sdp"
+                android:rotation="180"
+                android:src="@drawable/ic_like" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_60sdp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorBlueLight"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:rippleColor="@color/colorBlue">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_like" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</com.app.bible.knowbible.mvvm.view.theme_editor.MyLinearLayout>
