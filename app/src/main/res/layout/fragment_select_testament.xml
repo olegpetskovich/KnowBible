@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -110,115 +110,136 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layTestamentButtons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            tools:context="com.android.bible.knowbible.mvvm.view.fragment.bible_section.SelectTestamentFragment">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
-                android:id="@+id/btnOldTestament"
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
+            <LinearLayout
+                android:id="@+id/layTestamentButtons"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                app:strokeWidth="0.6dp">
+                tools:context="com.android.bible.knowbible.mvvm.view.fragment.bible_section.SelectTestamentFragment">
 
-                <RelativeLayout
+                <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
+                    android:id="@+id/btnOldTestament"
+                    style="@style/Widget.MaterialComponents.CardView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:padding="@dimen/_4sdp">
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeWidth="0.6dp">
 
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                        android:id="@+id/tvOldTestament"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/btn_old_testament"
-                        android:textAllCaps="true"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_4sdp">
 
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyButton
-                        android:id="@+id/btnOldTestamentInfo"
-                        style="@style/Widget.MaterialComponents.Button"
-                        android:layout_width="28dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@id/tvOldTestament"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:padding="4dp"
-                        app:cornerRadius="40dp"
-                        app:icon="@drawable/ic_testament_info"
-                        app:iconSize="20dp"
-                        app:strokeWidth="0.8dp"
-                        tools:ignore="RtlSymmetry" />
+                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                            android:id="@+id/tvOldTestament"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/btn_old_testament"
+                            android:textAllCaps="true"
+                            android:textSize="18sp" />
 
-                </RelativeLayout>
+                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyButton
+                            android:id="@+id/btnOldTestamentInfo"
+                            style="@style/Widget.MaterialComponents.Button"
+                            android:layout_width="28dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/tvOldTestament"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:padding="4dp"
+                            app:cornerRadius="40dp"
+                            app:icon="@drawable/ic_testament_info"
+                            app:iconSize="20dp"
+                            app:strokeWidth="0.8dp"
+                            tools:ignore="RtlSymmetry" />
 
-            </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
+                    </RelativeLayout>
 
-            <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
-                android:id="@+id/btnNewTestament"
-                style="@style/Widget.MaterialComponents.CardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                app:strokeWidth="0.6dp">
+                </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
 
-                <RelativeLayout
+                <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
+                    android:id="@+id/btnNewTestament"
+                    style="@style/Widget.MaterialComponents.CardView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:padding="@dimen/_4sdp">
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeWidth="0.6dp">
 
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                        android:id="@+id/tvNewTestament"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/btn_new_testament"
-                        android:textAllCaps="true"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:padding="@dimen/_4sdp">
 
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyButton
-                        android:id="@+id/btnNewTestamentInfo"
-                        style="@style/Widget.MaterialComponents.Button"
-                        android:layout_width="28dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@id/tvNewTestament"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:padding="4dp"
-                        app:cornerRadius="40dp"
-                        app:icon="@drawable/ic_testament_info"
-                        app:iconSize="20dp"
-                        app:strokeWidth="0.8dp"
-                        tools:ignore="RtlSymmetry" />
-                </RelativeLayout>
-            </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
+                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                            android:id="@+id/tvNewTestament"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/btn_new_testament"
+                            android:textAllCaps="true"
+                            android:textSize="18sp" />
+
+                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyButton
+                            android:id="@+id/btnNewTestamentInfo"
+                            style="@style/Widget.MaterialComponents.Button"
+                            android:layout_width="28dp"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/tvNewTestament"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:padding="4dp"
+                            app:cornerRadius="40dp"
+                            app:icon="@drawable/ic_testament_info"
+                            app:iconSize="20dp"
+                            app:strokeWidth="0.8dp"
+                            tools:ignore="RtlSymmetry" />
+                    </RelativeLayout>
+                </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_40sdp"
+                android:layout_weight="1.6"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardElevation="@dimen/_2sdp"
+                app:cardUseCompatPadding="true">
+
+                <FrameLayout
+                    android:id="@+id/nativeAdFrame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/nativeAdFrame"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/_6sdp"
-            android:layout_weight="1.2" />
-
     </LinearLayout>
 </com.app.bible.knowbible.mvvm.view.theme_editor.MyNestedScrollViewLayout>

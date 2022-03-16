@@ -30,8 +30,6 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         saveLoadData = SaveLoadData(this)
 
-        App.instance.interstitialAdLoader.loadInterstitialAd()
-
         var themeName: String? = saveLoadData.loadString(ThemeModeFragment.THEME_NAME_KEY)
         //Устаналиваем дефолтное значение, если ничего не установлено
         if (themeName != null) {

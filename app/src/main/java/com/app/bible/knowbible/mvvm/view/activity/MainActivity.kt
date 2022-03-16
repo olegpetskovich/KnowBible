@@ -67,6 +67,9 @@ import com.app.bible.knowbible.utility.Utility
 import com.app.bible.knowbible.utility.Utility.Companion.convertDpToPx
 import com.app.bible.knowbible.utility.Utility.Companion.viewAnimatorX
 import com.getkeepsafe.taptargetview.TapTargetSequence
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -1389,6 +1392,12 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         setIconForTabs() //Здесь этот метод вызывается для того, чтобы включить или отключить иконки в зависимости от выбранной ориентации экрана
+
+        val orientation: Int = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+            appBarLayout.setExpanded(false)
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT)
+            appBarLayout.setExpanded(true)
     }
 
     override fun setViewPagerSwipeState(viewPagerSwipeState: Boolean) {

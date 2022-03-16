@@ -7,15 +7,18 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import com.app.bible.knowbible.App
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.model.BibleTranslationModel
 import com.app.bible.knowbible.mvvm.model.BookModel
 import com.app.bible.knowbible.mvvm.model.DataToRestoreModel
+import com.app.bible.knowbible.mvvm.view.activity.MainActivity
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.TapTargetSelectTestamentFragment
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabBibleNumber
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.DialogListener
@@ -37,6 +40,8 @@ import com.muddzdev.styleabletoast.StyleableToast
 import kotlinx.android.synthetic.main.fragment_select_testament.*
 
 open class SelectTestamentFragment : Fragment(), DialogListener {
+    private val activity by lazy { requireActivity() as MainActivity }
+
     lateinit var myFragmentManager: FragmentManager
 
     private lateinit var listener: IActivityCommunicationListener
@@ -161,9 +166,9 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                             bibleTranslationInfo
                         )
                     ) {
-                        val bibleDataViewModel = activity?.let {
-                            ViewModelProvider(requireActivity()).get(BibleDataViewModel::class.java)
-                        }!!
+                        val bibleDataViewModel = activity.let {
+                            ViewModelProvider(requireActivity())[BibleDataViewModel::class.java]
+                        }
                         //Осуществляем предазгрузку книг Библии для большей производительности
                         bibleDataViewModel
                             .getAllBooksList(BibleDataViewModel.TABLE_BOOKS)
@@ -371,6 +376,14 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                     mainHandler.post(myRunnable)
                     saveLoadData.saveBoolean(TapTargetSelectTestamentFragment, true)
                 }
+                App.instance.nativeAdLoader.loadNativeAd()
+                App.instance.nativeAdLoader.nativeAdLiveData.observe(
+                    viewLifecycleOwner,
+                    { nativeAd ->
+                        if (nativeAd == null) return@observe
+                        App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
+                    })
+
 //                else if (!saveLoadData.loadBoolean("ads_question_key")) {
 //                    val adsDialog = AdsDialog()
 //                    adsDialog.isCancelable = false
@@ -399,9 +412,13 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
     //После очень долгого поиска решения, удалось осуществить нормальный поворот экрана в этом фрагменте, не менять этот метод и параметр android:configChanges в манифесте.
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val transaction: FragmentTransaction = myFragmentManager.beginTransaction()
-        transaction.setReorderingAllowed(false)
-        transaction.detach(this).attach(this).commitAllowingStateLoss()
+        myFragmentManager.let {
+            val fragment = SelectTestamentFragment()
+            fragment.setRootFragmentManager(it)
+            val transaction: FragmentTransaction = it.beginTransaction()
+            transaction.replace(R.id.fragment_container_bible, fragment)
+            transaction.commit()
+        }
     }
 
     fun setRootFragmentManager(myFragmentManager: FragmentManager) {

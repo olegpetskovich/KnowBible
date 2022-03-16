@@ -38,7 +38,7 @@ class NativeAdLoader(private val context: Context) {
                 }
                 .withAdListener(object : AdListener() {
                     override fun onAdFailedToLoad(adError: LoadAdError?) {
-
+                        log("NATIVE Error message: " + adError.toString())
                     }
 
                     override fun onAdClicked() {
@@ -62,7 +62,7 @@ class NativeAdLoader(private val context: Context) {
 
         log("MyTag", "N---------------------------N")
         logEventToFireBase("NATIVE_WAS_REQUESTED")
-        nativeAdLoader!!.loadAd(AdRequest.Builder().build())
+        nativeAdLoader?.loadAd(AdRequest.Builder().build())
     }
 
     fun showNativeAd(nativeLayout: FrameLayout) {
