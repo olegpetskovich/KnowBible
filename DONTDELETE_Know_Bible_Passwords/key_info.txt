@@ -1,3 +1,0 @@
-keystore password: Oleg1998!
-alias: key_know_bible
-key password: Oleg1998!
