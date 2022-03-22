@@ -383,12 +383,6 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                         if (nativeAd == null) return@observe
                         App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
                     })
-
-//                else if (!saveLoadData.loadBoolean("ads_question_key")) {
-//                    val adsDialog = AdsDialog()
-//                    adsDialog.isCancelable = false
-//                    adsDialog.show(myFragmentManager, "Ads Dialog")
-//                }
             }
         }
         return myView
