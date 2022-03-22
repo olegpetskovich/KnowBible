@@ -48,6 +48,10 @@ class SplashScreenActivity : AppCompatActivity() {
             ThemeModeFragment.BOOK_THEME -> setTheme(ThemeManager.Theme.BOOK)
         }
 
+        //Подгружаем нативку заранее, загрузка есть также в SelectTestamentFragment,
+        //чтобы рекламе также прогружалась при повороте экрана, к примеру
+        App.instance.nativeAdLoader.loadNativeAd()
+
         iV = findViewById(R.id.iV)
         textView = findViewById(R.id.tV)
 

@@ -76,8 +76,6 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
     private lateinit var foundVerses: ArrayList<BibleTextModel>
     private lateinit var previousTextForSearch: String
 
-    private var itemPosition: Int = -1
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true //Без этого кода не будет срабатывать поворот экрана
@@ -207,6 +205,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
                 rbAllBible.isChecked -> searchingSection = ALL_BIBLE_SECTION
                 rbOldTestament.isChecked -> searchingSection = OLD_TESTAMENT_SECTION
                 rbNewTestament.isChecked -> searchingSection = NEW_TESTAMENT_SECTION
+                else -> {}
             }
             Utility.hideKeyboard(requireActivity())
 
@@ -360,13 +359,13 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        //При возвращении в SearchFragment(после того, как пользователь нажал на найденный стих и перешёл в BibleTextFragment)
-        //Этот код обеспечит автоматическое возобновление поиска, чтобы при возврате на данный фрагмент снова сразу был отображён список найдённых текстов
-        previousTextForSearch = etSearch.text.toString()
-        searchText(etSearch.text.toString())
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        //При возвращении в SearchFragment(после того, как пользователь нажал на найденный стих и перешёл в BibleTextFragment)
+//        //Этот код обеспечит автоматическое возобновление поиска, чтобы при возврате на данный фрагмент снова сразу был отображён список найдённых текстов
+//        previousTextForSearch = etSearch.text.toString()
+//        searchText(etSearch.text.toString())
+//    }
 
     override fun onPause() {
         super.onPause()
