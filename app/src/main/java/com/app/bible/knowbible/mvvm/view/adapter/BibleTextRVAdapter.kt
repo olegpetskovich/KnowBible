@@ -172,7 +172,7 @@ class BibleTextRVAdapter(private val context: Context, private val models: Array
         }
 
         holder.tvVerse.textSize = saveLoadData.loadInt(TEXT_SIZE_KEY).toFloat()
-        holder.tvVerse.typeface = FontCache["cmu_concrete_roman_cyr.ttf", context]
+        holder.tvVerse.typeface = FontCache["lora_regular_cyr.ttf", context]
     }
 
     //Для того, чтобы отображение отступления первой линии текста и отображение жирного шрифта корректно, их пришлось совместить в один метод.
