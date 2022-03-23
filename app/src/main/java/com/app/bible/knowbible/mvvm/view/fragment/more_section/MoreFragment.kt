@@ -132,11 +132,11 @@ class MoreFragment : Fragment() {
                         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) appBarLayout.setExpanded(true, false)
                         else appBarLayout.setExpanded(true, true) //Открываем appBarLayout при включении режима множественного выбора
 
-                        val donLay = (activity as MainActivity).findViewById<LinearLayout>(R.id.donationLay)
+//                        val donLay = (activity as MainActivity).findViewById<LinearLayout>(R.id.donationLay)
                         TapTargetSequence(activity)
                                 .targets(
-                                        Utility.getTapTargetButton(donLay, requireContext(), R.string.btn_donation_title, R.string.btn_donation_description, Utility.convertPxToDp(donLay.width.toFloat(), requireContext()).toInt() - 60),
-                                        Utility.getTapTargetButton(tvSettings, requireContext(), R.string.btn_settings_title, R.string.btn_settings_description, Utility.convertPxToDp(tvSettings.width.toFloat(), requireContext()).toInt() - 30),
+//                                        Utility.getTapTargetButton(donLay, requireContext(), R.string.btn_donation_title, R.string.btn_donation_description, Utility.convertPxToDp(donLay.width.toFloat(), requireContext()).toInt() - 60),
+                                        Utility.getTapTargetButton(tvSettings, requireContext(), R.string.btn_settings_title, R.string.btn_settings_description, Utility.convertPxToDp(tvSettings.width.toFloat(), requireContext()).toInt()),
                                         Utility.getTapTargetButton(tvHighlightedVerses, requireContext(), R.string.btn_highlighted_verses_title, R.string.btn_highlighted_verses_description, Utility.convertPxToDp(tvHighlightedVerses.width.toFloat(), requireContext()).toInt() - 60),
                                         Utility.getTapTargetButton(tvContactUs, requireContext(), R.string.btn_contact_us_title, R.string.btn_contact_us_description, Utility.convertPxToDp(tvContactUs.width.toFloat(), requireContext()).toInt() - 60),
                                 ).start()

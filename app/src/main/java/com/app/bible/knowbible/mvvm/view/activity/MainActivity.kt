@@ -397,37 +397,37 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 //            articlesInfoDialog!!.show(myFragmentManager, "Articles Info Dialog")
 //        }
 
-        donationLay.setOnClickListener {
-            myFragmentManager.let {
-                val transaction: FragmentTransaction = it.beginTransaction()
-                transaction.setCustomAnimations(
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right
-                )
-                val donateFragment = SupportMinistryFragment()
-                donateFragment.setRootFragmentManager(myFragmentManager)
-
-                when (currentTabNumber) {
-                    0 -> transaction.replace(
-                        R.id.fragment_container_articles,
-                        donateFragment
-                    ) // Таб под номером 0 - это таб Статьи
-                    1 -> transaction.replace(
-                        R.id.fragment_container_bible,
-                        donateFragment
-                    ) // Таб под номером 1 - это таб Библия
-                    2 -> transaction.replace(
-                        R.id.fragment_container_more,
-                        donateFragment
-                    ) // Таб под номером 2 - это таб Ещё
-                }
-
-                transaction.addToBackStack(null)
-                transaction.commit()
-            }
-        }
+//        donationLay.setOnClickListener {
+//            myFragmentManager.let {
+//                val transaction: FragmentTransaction = it.beginTransaction()
+//                transaction.setCustomAnimations(
+//                    R.anim.enter_from_right,
+//                    R.anim.exit_to_left,
+//                    R.anim.enter_from_left,
+//                    R.anim.exit_to_right
+//                )
+//                val donateFragment = SupportMinistryFragment()
+//                donateFragment.setRootFragmentManager(myFragmentManager)
+//
+//                when (currentTabNumber) {
+//                    0 -> transaction.replace(
+//                        R.id.fragment_container_articles,
+//                        donateFragment
+//                    ) // Таб под номером 0 - это таб Статьи
+//                    1 -> transaction.replace(
+//                        R.id.fragment_container_bible,
+//                        donateFragment
+//                    ) // Таб под номером 1 - это таб Библия
+//                    2 -> transaction.replace(
+//                        R.id.fragment_container_more,
+//                        donateFragment
+//                    ) // Таб под номером 2 - это таб Ещё
+//                }
+//
+//                transaction.addToBackStack(null)
+//                transaction.commit()
+//            }
+//        }
 
         btnDeleteNote.setOnClickListener {
             val mainHandler = Handler(mainLooper)
@@ -1053,27 +1053,27 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
     }
 
     override fun setShowHideDonationLay(donationLayVisibility: Int) {
-        //Этот фрагмент кода нужен, чтобы donationLay не анимировался каждый раз при переходе между табами.
-        //Если в одном табе установлена видимость такая же, как и в другом, то всё остаётся на своих местах и ничего не анимируется.
-        //Анимирование происходит только в том случае, когда значение btnDonationLayVisibility меняется
-        val btnDonationLayVisibility = donationLay.visibility
-        if (btnDonationLayVisibility == donationLayVisibility) {
-            return
-        }
-
-        val animation: Animation?
-        if (donationLayVisibility == View.VISIBLE) {
-            donationLay.visibility = View.VISIBLE
-            donationLay.isEnabled = true
-            animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        } else {
-            donationLay.visibility = View.GONE
-            donationLay.isEnabled =
-                false //Нужно отключать кнопку, потому что в противном случае по какой-то причине кнопка продолжает нажиматься даже с видимостью GONE
-            animation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-        }
-        clearAnimation(animation, donationLay)
-        donationLay.startAnimation(animation)
+//        //Этот фрагмент кода нужен, чтобы donationLay не анимировался каждый раз при переходе между табами.
+//        //Если в одном табе установлена видимость такая же, как и в другом, то всё остаётся на своих местах и ничего не анимируется.
+//        //Анимирование происходит только в том случае, когда значение btnDonationLayVisibility меняется
+//        val btnDonationLayVisibility = donationLay.visibility
+//        if (btnDonationLayVisibility == donationLayVisibility) {
+//            return
+//        }
+//
+//        val animation: Animation?
+//        if (donationLayVisibility == View.VISIBLE) {
+//            donationLay.visibility = View.VISIBLE
+//            donationLay.isEnabled = true
+//            animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+//        } else {
+//            donationLay.visibility = View.GONE
+//            donationLay.isEnabled =
+//                false //Нужно отключать кнопку, потому что в противном случае по какой-то причине кнопка продолжает нажиматься даже с видимостью GONE
+//            animation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+//        }
+//        clearAnimation(animation, donationLay)
+//        donationLay.startAnimation(animation)
     }
 
     override fun setShowHideAddNoteButtonFAB(addNoteFABBtnVisibility: Int) {
@@ -1199,7 +1199,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
     }
 
     override fun setBtnDonationClickableState(clickableState: Boolean) {
-        donationLay.isClickable = clickableState
+//        donationLay.isClickable = clickableState
     }
 
     //Метод нужен, чтобы сменять текст названия приложения на текст выбранного текста Библии
