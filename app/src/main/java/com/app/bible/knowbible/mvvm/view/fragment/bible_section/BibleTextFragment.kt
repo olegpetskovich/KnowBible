@@ -222,10 +222,13 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         }
 
         bibleDataViewModel
-            .getBookShortName(BibleDataViewModel.TABLE_BOOKS, chapterInfo?.bookNumber!!)
-            .observe(viewLifecycleOwner, { shortName ->
+            .getBookShortName(
+                BibleDataViewModel.TABLE_BOOKS,
+                chapterInfo?.bookNumber!!
+            )
+            .observe(viewLifecycleOwner) { shortName ->
                 listener.setTvSelectedBibleText("$shortName.", true)
-            })
+            }
 
         return myView
     }
