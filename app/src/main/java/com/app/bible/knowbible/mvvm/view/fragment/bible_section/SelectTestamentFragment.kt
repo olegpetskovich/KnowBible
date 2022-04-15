@@ -172,7 +172,7 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                         //Осуществляем предазгрузку книг Библии для большей производительности
                         bibleDataViewModel
                             .getAllBooksList(BibleDataViewModel.TABLE_BOOKS)
-                            .observe(viewLifecycleOwner, { list ->
+                            .observe(viewLifecycleOwner) { list ->
                                 oldTestamentBooksList = ArrayList(
                                     list.subList(
                                         0,
@@ -263,7 +263,7 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                                         "Testament Info Dialog"
                                     ) //Тут должен быть именно childFragmentManager
                                 }
-                            })
+                            }
                     } else {
                         openBibleTranslationsFragment()
                         StyleableToast.makeText(
@@ -378,11 +378,11 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                 }
                 App.instance.nativeAdLoader.loadNativeAd()
                 App.instance.nativeAdLoader.nativeAdLiveData.observe(
-                    viewLifecycleOwner,
-                    { nativeAd ->
-                        if (nativeAd == null) return@observe
-                        App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
-                    })
+                    viewLifecycleOwner
+                ) { nativeAd ->
+                    if (nativeAd == null) return@observe
+                    App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
+                }
             }
         }
         return myView

@@ -3,6 +3,7 @@ package com.app.bible.knowbible.mvvm.view.activity
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -14,7 +15,6 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +54,6 @@ import com.app.bible.knowbible.mvvm.view.fragment.bible_section.BibleTranslation
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.BibleTranslationsFragment.Companion.TRANSLATION_DB_FILE_JSON_INFO
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.notes_subsection.AddEditNoteFragment
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.AppLanguageFragment
-import com.app.bible.knowbible.mvvm.view.fragment.more_section.SupportMinistryFragment
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.MoreRootFragment
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment.Companion.BOOK_THEME
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment.Companion.DARK_THEME
@@ -62,14 +61,16 @@ import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment.Companion.THEME_NAME_KEY
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
+import com.app.bible.knowbible.push.PushCreator
+import com.app.bible.knowbible.push.RService
+import com.app.bible.knowbible.push.UnlockBR
 import com.app.bible.knowbible.utility.SaveLoadData
 import com.app.bible.knowbible.utility.Utility
 import com.app.bible.knowbible.utility.Utility.Companion.convertDpToPx
+import com.app.bible.knowbible.utility.Utility.Companion.getCurrentTime
+import com.app.bible.knowbible.utility.Utility.Companion.log
 import com.app.bible.knowbible.utility.Utility.Companion.viewAnimatorX
 import com.getkeepsafe.taptargetview.TapTargetSequence
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -81,11 +82,11 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_more.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
@@ -185,6 +186,21 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
         loadLocale()
 
         setContentView(R.layout.activity_main)
+
+        //Отмечаем время захода в приложение, чтобы пуш не приходил тогда, когда юзер уже зашёл в приложение,
+        //Потому что пуш должен приходить только тогда, когда юзер не заходил в прилу больше 1 суток
+        saveLoadData.saveLong(UnlockBR.SHOWED_PUSH_TIME_KEY, getCurrentTime())
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForegroundService(Intent(this, RService::class.java))
+            else
+                startService(Intent(this, RService::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(PushCreator.pushId)
+
 
         when (saveLoadData.loadString(THEME_NAME_KEY)) {
             LIGHT_THEME -> setTheme(ThemeManager.Theme.LIGHT, false)
