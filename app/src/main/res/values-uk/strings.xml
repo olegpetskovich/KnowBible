@@ -221,4 +221,7 @@
     <string name="text_ask_ads">Дорогі користувачі, на тлі відсутності будь-якого фінансування, постало питання про майбутнє нашого проекту. І ми вважаємо своїм обов</string>
     <string name="question_ask_ads">Як ви поставитеся до появи необтяжливої реклами в нашому додатку?</string>
     <string name="thanks_for_vote">Дякуємо за ваш голос!</string>
+    <string name="tv_not_now">Не зараз</string>
+    <string name="tv_read">Читати</string>
+    <string name="tv_time_to_read">Сьогодні ти ще не читав Слово Боже! Зараз той самий час!</string>
 </resources>

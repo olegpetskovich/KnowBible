@@ -222,4 +222,7 @@
     <string name="text_ask_ads">Dear users, in the absence of any funding, the question arose about the future of our project. And we consider it our duty to know your opinion. The reason is that we have big plans for the further development of the project, but there are no necessary funds even to support it.</string>
     <string name="question_ask_ads">How would you feel about inconspicuous ads in our app?</string>
     <string name="thanks_for_vote">Thanks for your vote!</string>
+    <string name="tv_not_now">Not now</string>
+    <string name="tv_read">Read</string>
+    <string name="tv_time_to_read">You haven\'t read the Word of God today! Now is the time!</string>
 </resources>
