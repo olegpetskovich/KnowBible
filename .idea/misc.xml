@@ -4,7 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable-v24/custom_progress_bar.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable-xhdpi/btn_later_push.xml" value="0.1165" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/btn_later_push.xml" value="0.1165" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/btn_native_ad.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/btn_push_later.xml" value="0.1165" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/btn_push_read.xml" value="0.1985" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/circle_background.xml" value="0.1165" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/circle_progress_bar.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/corners_button.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/ic_ads_background.xml" value="0.20833333333333334" />
@@ -14,6 +19,7 @@
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-land/fragment_select_testament.xml" value="0.18" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-mdpi/native_layout.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-small-land-v21/activity_start.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-v31/push_layout.xml" value="0.25" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/activity_main.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/activity_splash_screen.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/activity_start.xml" value="0.1921875" />
@@ -21,6 +27,7 @@
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/dialog_bible_translation.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/dialog_color_picker.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/dialog_donate_details.xml" value="0.1921875" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/dialog_testament_info.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/fragment_articles.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/fragment_bible_text.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/fragment_christian_near.xml" value="0.1921875" />
@@ -37,8 +44,11 @@
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/fragment_select_testament.xml" value="0.22" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_article.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_bible_translation.xml" value="0.1921875" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_bible_verse_text.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_book.xml" value="0.1921875" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_note.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/native_layout.xml" value="0.1921875" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/push_layout.xml" value="0.33" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/menu/bottom_menu.xml" value="0.1921875" />
       </map>
     </option>
