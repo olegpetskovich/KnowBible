@@ -23,6 +23,8 @@ import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.model.BibleTranslationModel
 import com.getkeepsafe.taptargetview.TapTarget
 import java.io.File
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class Utility {
     companion object {
@@ -40,6 +42,8 @@ class Utility {
                 cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
         }
 
+        fun getCurrentTime() =
+            TimeUnit.MILLISECONDS.toHours(Calendar.getInstance().timeInMillis)
 
         //Проверка на то, скачан ли хоть один перевод или же папка, предназначенная для скачанных переводов, пуста
         fun isTranslationsDownloaded(context: Context): Boolean {
