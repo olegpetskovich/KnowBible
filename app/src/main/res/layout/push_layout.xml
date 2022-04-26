@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/_4sdp"
+        android:paddingBottom="@dimen/_8sdp"
         android:weightSum="3">
 
         <LinearLayout
