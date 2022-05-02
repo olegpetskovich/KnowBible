@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.widget.RemoteViews
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
+import com.app.bible.knowbible.R
+import com.app.bible.knowbible.push.accessory.clickGoal
 import com.app.bible.knowbible.push.accessory.sec
 
 class RService : Service() {
@@ -44,15 +47,21 @@ class RService : Service() {
     private fun startForegroundServiceWithPanel() {
         val nn = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nn.createServiceChannel()
-//        val panel = setPanelOnClickGoals()
+        val panel = setPanelOnClickGoals()
         val builder = NotificationCompat.Builder(this, R_SERVICE_CHANNEL_ID)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSmallIcon(android.R.color.transparent)
-//            .setCustomContentView(panel)
+            .setCustomContentView(panel)
         try {
             startForeground(R_SERVICE_NOTIFICATION_ID, builder.build())
         } catch (e: Exception) {
         }
     }
+
+    private fun setPanelOnClickGoals() =
+        RemoteViews(applicationContext.packageName, R.layout.r_service_panel_view).apply {
+            setOnClickPendingIntent(R.id.tvPanelText, clickGoal())
+        }
 
     private fun NotificationManager.createServiceChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

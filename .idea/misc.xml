@@ -16,6 +16,7 @@
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/drawable/ic_like.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-hdpi-v21/fragment_select_testament.xml" value="0.46125" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-land-v21/fragment_select_testament.xml" value="0.8225" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-land-xhdpi-v21/r_service_panel_view.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-land/fragment_select_testament.xml" value="0.18" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-mdpi/native_layout.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout-small-land-v21/activity_start.xml" value="0.18385416666666668" />
@@ -49,6 +50,7 @@
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/item_note.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/native_layout.xml" value="0.1921875" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/push_layout.xml" value="0.33" />
+        <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/layout/r_service_panel_view.xml" value="0.25" />
         <entry key="..\:/Users/olegp/Desktop/Programming/Android/KnowBible/app/src/main/res/menu/bottom_menu.xml" value="0.1921875" />
       </map>
     </option>

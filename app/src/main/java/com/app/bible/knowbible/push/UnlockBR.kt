@@ -5,11 +5,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
+import android.widget.RemoteViews
+import com.app.bible.knowbible.R
 import com.app.bible.knowbible.utility.SaveLoadData
 import com.app.bible.knowbible.utility.Utility.Companion.getCurrentTime
-import com.app.bible.knowbible.utility.Utility.Companion.log
-import java.text.SimpleDateFormat
-import java.util.*
+import com.app.bible.knowbible.utility.Utility.Companion.getTapTargetButton
+
 
 class UnlockBR : BroadcastReceiver() {
     companion object {
@@ -24,15 +26,15 @@ class UnlockBR : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_USER_PRESENT) {
             val kgMan = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
             if (kgMan.isKeyguardLocked.not()) {
-                val saveLoadData = SaveLoadData(context)
-
-                val timeInHours = SimpleDateFormat("H", Locale.getDefault()).format(Date()).toInt()
-                log(timeInHours.toString())
-
-                if (isNewDay(saveLoadData) && timeInHours >= startPushTime && timeInHours <= endPushTime) {
+                    //                val saveLoadData = SaveLoadData(context)
+//
+//                val timeInHours = SimpleDateFormat("H", Locale.getDefault()).format(Date()).toInt()
+//                log(timeInHours.toString())
+//
+//                if (isNewDay(saveLoadData) && timeInHours >= startPushTime && timeInHours <= endPushTime) {
                     PushCreator.send(context)
-                    saveLoadData.saveLong(SHOWED_PUSH_TIME_KEY, getCurrentTime())
-                }
+//                    saveLoadData.saveLong(SHOWED_PUSH_TIME_KEY, getCurrentTime())
+//                }
             }
         }
     }
