@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,10 +18,9 @@ import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabMore
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicationListener
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment() {
@@ -136,9 +134,9 @@ class MoreFragment : Fragment() {
                         TapTargetSequence(activity)
                                 .targets(
 //                                        Utility.getTapTargetButton(donLay, requireContext(), R.string.btn_donation_title, R.string.btn_donation_description, Utility.convertPxToDp(donLay.width.toFloat(), requireContext()).toInt() - 60),
-                                        Utility.getTapTargetButton(tvSettings, requireContext(), R.string.btn_settings_title, R.string.btn_settings_description, Utility.convertPxToDp(tvSettings.width.toFloat(), requireContext()).toInt()),
-                                        Utility.getTapTargetButton(tvHighlightedVerses, requireContext(), R.string.btn_highlighted_verses_title, R.string.btn_highlighted_verses_description, Utility.convertPxToDp(tvHighlightedVerses.width.toFloat(), requireContext()).toInt() - 60),
-                                        Utility.getTapTargetButton(tvContactUs, requireContext(), R.string.btn_contact_us_title, R.string.btn_contact_us_description, Utility.convertPxToDp(tvContactUs.width.toFloat(), requireContext()).toInt() - 60),
+                                        Utils.getTapTargetButton(tvSettings, requireContext(), R.string.btn_settings_title, R.string.btn_settings_description, Utils.convertPxToDp(tvSettings.width.toFloat(), requireContext()).toInt()),
+                                        Utils.getTapTargetButton(tvHighlightedVerses, requireContext(), R.string.btn_highlighted_verses_title, R.string.btn_highlighted_verses_description, Utils.convertPxToDp(tvHighlightedVerses.width.toFloat(), requireContext()).toInt() - 60),
+                                        Utils.getTapTargetButton(tvContactUs, requireContext(), R.string.btn_contact_us_title, R.string.btn_contact_us_description, Utils.convertPxToDp(tvContactUs.width.toFloat(), requireContext()).toInt() - 60),
                                 ).start()
 
                     }

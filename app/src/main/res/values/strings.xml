@@ -3,10 +3,8 @@
 
     <string name="ADS_APPLICATION_ID" translatable="false">ca-app-pub-1132056005859803~7493831697</string>
 
-    <string name="INTER_AD_ID" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
     <string name="NATIVE_AD_ID" translatable="false">ca-app-pub-1132056005859803/6198993524</string>
-    <string name="REWARDED_AD_ID" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
-    <string name="BANNER_AD_ID" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="BANNER_AD_ID" translatable="false">ca-app-pub-1132056005859803/7926761712</string>
 
     <string name="deleting">Удалить все стихи?</string>
     <string name="delete">Удалить</string>
@@ -16,7 +14,6 @@
     <string name="title_articles">Статьи</string>
     <string name="title_bible">Библия</string>
     <string name="title_more">Ещё</string>
-
 
     <string name="support_know_bible_link" translatable="false">https://bit.ly/2V9vV7X</string>
 

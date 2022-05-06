@@ -14,10 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
@@ -25,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.app.bible.knowbible.App
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.model.BibleTextModel
 import com.app.bible.knowbible.mvvm.model.DailyVerseModel
@@ -34,7 +32,8 @@ import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicat
 import com.app.bible.knowbible.mvvm.view.dialog.AddVerseNoteDialog
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
+import com.google.android.gms.ads.AdView
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.muddzdev.styleabletoast.StyleableToast
@@ -63,6 +62,8 @@ class DailyVerseFragment : Fragment(), DialogListener {
     private lateinit var verseObject: BibleTextModel
     private lateinit var addVerseNoteDialog: AddVerseNoteDialog
 
+    private var banner: AdView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true //Без этого кода не будет срабатывать поворот экрана
@@ -79,6 +80,15 @@ class DailyVerseFragment : Fragment(), DialogListener {
             ThemeManager.theme,
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такое решение
+
+        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
+        banner = AdView(requireContext())
+        adViewContainer.addView(banner)
+        App.instance.bannerAdLoader.loadBanner(
+            requireActivity(),
+            adViewContainer,
+            banner!!
+        )
 
         ivBook = myView.findViewById(R.id.ivBook)
         tvVerse = myView.findViewById(R.id.tvVerse)
@@ -251,7 +261,7 @@ class DailyVerseFragment : Fragment(), DialogListener {
                             }
                         }
 
-                        val clearedStr = Utility.getClearedText(StringBuilder(verseText.verse_text))
+                        val clearedStr = Utils.getClearedText(StringBuilder(verseText.verse_text))
                         tvVerse.text = "«$clearedStr» ($shortName. $textAddress)"
                     })
             })
@@ -271,7 +281,7 @@ class DailyVerseFragment : Fragment(), DialogListener {
 
     private fun fromJSON(json: String?): ArrayList<DailyVerseModel> {
         val gson = Gson()
-        Utility.log(json!!)
+        Utils.log(json!!)
         return gson.fromJson(StringReader(json), Array<DailyVerseModel>::class.java)
             .toList() as ArrayList<DailyVerseModel>
     }
@@ -290,6 +300,8 @@ class DailyVerseFragment : Fragment(), DialogListener {
 
     override fun onResume() {
         super.onResume()
+        banner?.resume()
+
         //Обновляем тему вьюшек в onResume, чтобы при смене темы и возврата к этому фрагменту, внешний вид вьюшек поменялся в соответствии с темой
         when (ThemeManager.theme) {
             ThemeManager.Theme.LIGHT -> ivBook.setColorFilter(
@@ -323,6 +335,11 @@ class DailyVerseFragment : Fragment(), DialogListener {
         listener.setShowHideToolbarBackButton(View.VISIBLE)
     }
 
+    override fun onPause() {
+        super.onPause()
+        banner?.pause()
+    }
+
     override fun dismissDialog() {
         addVerseNoteDialog.dismiss()
     }
@@ -339,13 +356,4 @@ class DailyVerseFragment : Fragment(), DialogListener {
             transaction.commit()
         }
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        if (context is OnFragmentInteractionListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-//        }
-//    }
 }

@@ -30,6 +30,7 @@ class AdaptiveBannerAdLoader(private val context: Context) {
             }
 
             override fun onAdClicked() {
+                logEventToFireBase("BANNER_CLICKED")
             }
 
             override fun onAdClosed() {
@@ -40,6 +41,7 @@ class AdaptiveBannerAdLoader(private val context: Context) {
             }
         }
 
+        logEventToFireBase("BANNER_REQUESTED")
         banner.loadAd(adRequest)
     }
 

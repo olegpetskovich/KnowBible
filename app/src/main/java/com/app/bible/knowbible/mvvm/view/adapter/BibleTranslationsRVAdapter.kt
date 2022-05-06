@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.model.BibleTranslationModel
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
@@ -92,11 +92,11 @@ class BibleTranslationsRVAdapter(
             holder.ivDownloaded.visibility = View.VISIBLE
         } else if (applicationFile.exists() && saveLoadData.loadBoolean(isTranslationDownloading)) {
             if (downloadedTranslationsList.contains(models[position].translationDBFileName)) {
-                Utility.log(
+                Utils.log(
                     "tag1",
                     "onBind downloadedTranslationsList size: " + downloadedTranslationsList.size.toString() + " | and data: " + downloadedTranslationsList[0]
                 )
-                Utility.log("tag1", "Adapter position: $position")
+                Utils.log("tag1", "Adapter position: $position")
 //                holder.btnDownloadBibleTranslate.visibility = View.GONE
 //                holder.layProgressBar.visibility = View.VISIBLE
 //
@@ -128,13 +128,13 @@ class BibleTranslationsRVAdapter(
         init {
             btnDownloadBibleTranslate.visibility = View.VISIBLE
             btnDownloadBibleTranslate.setOnClickListener {
-                if (Utility.isNetworkAvailable(context)!!) {
+                if (Utils.isNetworkAvailable(context)!!) {
                     downloadedTranslationsList.add(models[adapterPosition].translationDBFileName)
-                    Utility.log(
+                    Utils.log(
                         "tag1",
                         "btnClicked downloadedTranslationsList size: " + downloadedTranslationsList.size.toString()
                     )
-                    Utility.log("tag1", "Adapter position: $adapterPosition")
+                    Utils.log("tag1", "Adapter position: $adapterPosition")
                     downloadFiles(
                         models[adapterPosition].translationDBFileName,
                         btnDownloadBibleTranslate,
@@ -255,7 +255,7 @@ class BibleTranslationsRVAdapter(
                             progressCountTitle.text = progress.toInt().toString() + "%"
                             downloadProgressBar.progress = progress.toInt()
 
-                            Utility.log("Uploaded " + progress.toInt() + "%")
+                            Utils.log("Uploaded " + progress.toInt() + "%")
                         }?.addOnSuccessListener {
                             fragmentCommunication.setFilePathForDeleting(
                                 null,
@@ -267,11 +267,11 @@ class BibleTranslationsRVAdapter(
                             ) //Устаналиваем значение, которое говорит о том, что перевод скачан
 
                             downloadedTranslationsList.remove(models[adapterPosition].translationDBFileName)
-                            Utility.log(
+                            Utils.log(
                                 "tag1",
                                 "downloadSuccess downloadedTranslationsList size: " + downloadedTranslationsList.size.toString()
                             )
-                            Utility.log("tag1", "Adapter position: $adapterPosition")
+                            Utils.log("tag1", "Adapter position: $adapterPosition")
 
                             StyleableToast.makeText(
                                 context,
@@ -285,7 +285,7 @@ class BibleTranslationsRVAdapter(
 
                             fragmentCommunication.setIsTranslationDownloaded(true)
                         }?.addOnFailureListener {
-                            Utility.log(it.toString())
+                            Utils.log(it.toString())
                         }
                 }
                 .addOnFailureListener {}

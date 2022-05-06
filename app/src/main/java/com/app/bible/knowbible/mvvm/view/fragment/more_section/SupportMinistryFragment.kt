@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.airbnb.lottie.LottieAnimationView
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabMoreNumber
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.DialogListener
@@ -18,7 +17,7 @@ import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicat
 import com.app.bible.knowbible.mvvm.view.dialog.DonateDetailsDialog
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility.Companion.pulsatingAnimation
+import com.app.bible.knowbible.utility.Utils.Companion.pulsatingAnimation
 
 class SupportMinistryFragment : Fragment(), DialogListener {
 

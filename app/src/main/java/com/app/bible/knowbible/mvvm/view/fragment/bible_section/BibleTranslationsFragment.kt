@@ -24,7 +24,7 @@ import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
 import com.app.bible.knowbible.mvvm.viewmodel.BibleTranslationsViewModel
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.StorageTask
 import com.google.gson.Gson
@@ -59,7 +59,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utility.log("onCreate")
+        Utils.log("onCreate")
         retainInstance = true //Без этого кода не будет срабатывать поворот экрана
         saveLoadData = SaveLoadData(requireContext())
     }
@@ -75,10 +75,10 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такое решение
 
-        Utility.log("onCreateView")
+        Utils.log("onCreateView")
 //        Log.d("MyTag", myFragmentManager.backStackEntryCount.toString())
 
-        if (!Utility.isTranslationsDownloaded(requireContext())) { //Проверяем, если в папке, которая содержит БД с переводами Библии, пусто, то открываем диалог, в котором говорится, что хотя бы один перевод нужно скачать
+        if (!Utils.isTranslationsDownloaded(requireContext())) { //Проверяем, если в папке, которая содержит БД с переводами Библии, пусто, то открываем диалог, в котором говорится, что хотя бы один перевод нужно скачать
             bibleTranslationDialog = BibleTranslationDialog(this)
             bibleTranslationDialog.isCancelable = false
             bibleTranslationDialog.show(
@@ -144,7 +144,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Utility.log("onAttach")
+        Utils.log("onAttach")
 
         if (context is IActivityCommunicationListener) listener = context
         else throw RuntimeException("$context must implement IActivityCommunicationListener")
@@ -152,7 +152,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
 
     override fun onResume() {
         super.onResume()
-        Utility.log("onResume")
+        Utils.log("onResume")
 
         listener.setTabNumber(tabBibleNumber)
         listener.setMyFragmentManager(myFragmentManager)
@@ -168,7 +168,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
         if (jsonBibleInfo != null && jsonBibleInfo.isNotEmpty()) {
             val bibleTranslationInfo: BibleTranslationModel =
                 Gson().fromJson(jsonBibleInfo, BibleTranslationModel::class.java)
-            if (Utility.isSelectedTranslationDownloaded(requireContext(), bibleTranslationInfo)) {
+            if (Utils.isSelectedTranslationDownloaded(requireContext(), bibleTranslationInfo)) {
                 listener.setBtnSelectTranslationVisibility(View.VISIBLE)
             } else {
                 listener.setBtnSelectTranslationVisibility(View.GONE)
@@ -182,7 +182,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
 
     override fun onStart() {
         super.onStart()
-        Utility.log("onStart")
+        Utils.log("onStart")
         if (rvAdapter != null)
             rvAdapter!!.notifyDataSetChanged() //В случае если юзер свернёт приложение, когда этот фрагмент будет включён, потом удалит какой-то файл перевода и после этого снова откроет приложение, то список обновится и сразу будет отображено, что перевод удалён
     }
@@ -190,7 +190,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
     //Сохранять состояние нужно именно в onStop, потому что в ситуации, когда приложение закрывается из фона, просто свайпом, вызывается именно этот метод, а, к примеру, onDestroy нет
     override fun onStop() {
         super.onStop()
-        Utility.log("onStop")
+        Utils.log("onStop")
 
         //В случае закрытия приложения в период скачивания, файл будет удалён, потому что скачался не полностью
         if (fileForDeleting != null && fileForDeleting!!.exists() && fileToCancel != null) {
@@ -203,7 +203,7 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
                     BibleTranslationsRVAdapter.isTranslationDownloading,
                     false
                 ) //Устанавливаем значение false, означает, что перевод не скачивается
-                Utility.log("Canceled")
+                Utils.log("Canceled")
             }
             StyleableToast.makeText(
                 requireContext(),
@@ -218,16 +218,16 @@ class BibleTranslationsFragment : Fragment(), BibleTranslationsRVAdapter.IFragme
 
     override fun onDetach() {
         super.onDetach()
-        Utility.log("onDetach")
+        Utils.log("onDetach")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Utility.log("onDestroyView")
+        Utils.log("onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Utility.log("onDestroy")
+        Utils.log("onDestroy")
     }
 }

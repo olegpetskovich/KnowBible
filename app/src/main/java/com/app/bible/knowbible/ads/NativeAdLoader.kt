@@ -9,10 +9,9 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app.bible.knowbible.mvvm.view.activity.MainActivity
 import com.app.bible.knowbible.utility.LogHelper.logEventToFireBase
-import com.app.bible.knowbible.utility.Utility
-import com.app.bible.knowbible.utility.Utility.Companion.log
+import com.app.bible.knowbible.utility.Utils
+import com.app.bible.knowbible.utility.Utils.Companion.log
 import com.app.bible.knowbible.R
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.nativead.MediaView
@@ -26,7 +25,7 @@ class NativeAdLoader(private val context: Context) {
     val nativeAdLiveData: LiveData<NativeAd?> get() = nativeAdLiveDataValue
 
     fun loadNativeAd() {
-        if (!Utility.isNetworkAvailable(context)) return
+        if (!Utils.isNetworkAvailable(context)) return
 
         if (nativeAdLiveDataValue.value != null || nativeAdLoader != null && nativeAdLoader!!.isLoading) return
 

@@ -5,44 +5,43 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.net.toUri
-import androidx.core.text.HtmlCompat
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.app.bible.knowbible.App
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabArticlesNumber
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicationListener
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
+import com.app.bible.knowbible.utility.Utils
+import com.google.android.gms.ads.AdView
 
 class ArticleFragment : Fragment() {
     private lateinit var listener: IActivityCommunicationListener
 
+    private lateinit var webView: WebView
+
     private lateinit var myFragmentManager: FragmentManager
 
-    private lateinit var articleImage: Bitmap
-    private lateinit var articleName: String
-    private lateinit var articleText: String
-    private lateinit var authorName: String
-    private lateinit var telegramLink: String
-    private lateinit var instagramLink: String
+    private var banner: AdView? = null
 
-    fun setArticleData(articleImage: Bitmap, articleName: String, articleText: String, authorName: String, telegramLink: String, instagramLink: String) {
-        this.articleImage = articleImage
-        this.articleName = articleName
-        this.articleText = articleText
-        this.authorName = authorName
-        this.telegramLink = telegramLink
-        this.instagramLink = instagramLink
+    private lateinit var articleLink: String
+
+    fun setArticleData(articleLink: String) {
+        this.articleLink = articleLink
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,52 +49,81 @@ class ArticleFragment : Fragment() {
         retainInstance = true //Без этого кода не будет срабатывать поворот экрана
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val myView = inflater.inflate(R.layout.fragment_article, container, false)
-        listener.setTheme(ThemeManager.theme, false) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
+        listener.setTheme(
+            ThemeManager.theme,
+            false
+        ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
 
-        val ivArticleImage: ImageView = myView.findViewById(R.id.ivArticleImage)
-        ivArticleImage.setImageBitmap(articleImage)
+        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
+        banner = AdView(requireContext())
+        adViewContainer.addView(banner)
+        App.instance.bannerAdLoader.loadBanner(
+            requireActivity(),
+            adViewContainer,
+            banner!!
+        )
 
-        val tvArticleName: TextView = myView.findViewById(R.id.tvArticleName)
-        tvArticleName.text = articleName
+        val progressBar: ProgressBar = myView.findViewById(R.id.progressBar)
 
-        val tvArticleText: TextView = myView.findViewById(R.id.tvArticleText)
-        tvArticleText.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            SpannableString(Html.fromHtml(articleText, HtmlCompat.FROM_HTML_MODE_LEGACY))
-        } else {
-            SpannableString(Html.fromHtml(articleText))
+        val swipeRefresh: SwipeRefreshLayout = myView.findViewById(R.id.swipeRefresh)
+        swipeRefresh.setOnRefreshListener { loadUrl(articleLink) }
+
+        webView = myView.findViewById(R.id.webView)
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+                return if (url == null || url.startsWith("http://") || url.startsWith("https://")) false else try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    view.context.startActivity(intent)
+                    true
+                } catch (e: Exception) {
+                    true
+                }
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                progressBar.isVisible = true
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                progressBar.isVisible = false
+                swipeRefresh.isRefreshing = false
+            }
         }
 
-        val tvAuthorName: TextView = myView.findViewById(R.id.tvAuthorName)
-        tvAuthorName.text = authorName
-
-        val btnTelegramChannel: ImageView = myView.findViewById(R.id.btnTelegramChannel)
-        if (telegramLink.isEmpty()) {
-            btnTelegramChannel.visibility = View.GONE
-        } else {
-            btnTelegramChannel.visibility = View.VISIBLE
-            btnTelegramChannel.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, telegramLink.toUri())) }
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView, progress: Int) {
+                progressBar.progress = progress
+            }
         }
 
-        val btnInstagramChannel: ImageView = myView.findViewById(R.id.btnInstagramChannel)
-        if (instagramLink.isEmpty()) {
-            btnInstagramChannel.visibility = View.GONE
-        } else {
-            btnInstagramChannel.visibility = View.VISIBLE
-            btnInstagramChannel.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, instagramLink.toUri())) }
-        }
+        loadUrl(articleLink)
 
-        myFragmentManager.let {
-            //            val transaction: FragmentTransaction = it.beginTransaction()
-//            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-//
-//
-//            transaction.replace(R.id.fragment_container_more, )
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-        }
         return myView
+    }
+
+    private fun showText(text: String) {
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showText(@StringRes res: Int) {
+        showText(getString(res))
+    }
+
+    private fun loadUrl(url: String) {
+        if (!Utils.isNetworkAvailable(requireContext())) {
+            showText(R.string.toast_no_internet_connection)
+            return
+        }
+        webView.loadUrl(url)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -105,10 +133,7 @@ class ArticleFragment : Fragment() {
         myFragmentManager.let {
             val articleFragment = ArticleFragment()
             articleFragment.setRootFragmentManager(it)
-            articleFragment.articleImage = articleImage
-            articleFragment.articleName = articleName
-            articleFragment.articleText = articleText
-            articleFragment.authorName = authorName
+            articleFragment.articleLink = articleLink
 
             val transaction: FragmentTransaction = it.beginTransaction()
             transaction.replace(R.id.fragment_container_articles, articleFragment)
@@ -128,6 +153,8 @@ class ArticleFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        banner?.resume()
+
         listener.setTabNumber(tabArticlesNumber)
         listener.setMyFragmentManager(myFragmentManager)
         listener.setIsBackStackNotEmpty(true)
@@ -137,5 +164,10 @@ class ArticleFragment : Fragment() {
         listener.setShowHideToolbarBackButton(View.VISIBLE)
 
         listener.setTvSelectedBibleTextVisibility(View.GONE)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        banner?.pause()
     }
 }

@@ -6,8 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility.Companion.getCurrentTime
-import com.app.bible.knowbible.utility.Utility.Companion.log
+import com.app.bible.knowbible.utility.Utils.Companion.getCurrentTime
+import com.app.bible.knowbible.utility.Utils.Companion.log
 import java.text.SimpleDateFormat
 import java.util.*
 

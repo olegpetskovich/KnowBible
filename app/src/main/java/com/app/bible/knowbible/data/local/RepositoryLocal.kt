@@ -130,7 +130,7 @@ class RepositoryLocal {
                 .loadBookShortName(tableName, bookNumber)
                 .flatMap { response: String ->
                     //flatMap здесь используется, чтобы показать, что при получении данных, их можно сначала отредактировать как надо, а потом отправить дальше
-                    return@flatMap Single.fromCallable<String> { return@fromCallable response }
+                    return@flatMap Single.fromCallable { return@fromCallable response }
                 }
     }
 

@@ -12,17 +12,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.data.local.NotesDBHelper
-import com.app.bible.knowbible.mvvm.model.ChapterModel
 import com.app.bible.knowbible.mvvm.model.NoteModel
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabBibleNumber
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicationListener
-import com.app.bible.knowbible.mvvm.view.fragment.bible_section.BibleTextFragment
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.android.material.button.MaterialButton
 import com.muddzdev.styleabletoast.StyleableToast
 
@@ -156,7 +153,7 @@ class AddEditNoteFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        Utility.log("onStop work")
+        Utils.log("onStop work")
 
         //Эта проверка нужна для того, чтобы в случае нажатия кнопки "сохранить" не сохранять заметку дважды. Если кнопка "Сохранить" нажата, то весь этот вызов срабатывать не будет
         if (!isBtnSaveClicked) {
@@ -166,7 +163,7 @@ class AddEditNoteFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        Utility.log("onPause work")
+        Utils.log("onPause work")
         listener.setShowHideNoteButtons(View.GONE)
     }
 

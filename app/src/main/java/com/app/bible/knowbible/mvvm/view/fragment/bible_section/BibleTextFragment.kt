@@ -41,7 +41,7 @@ import com.app.bible.knowbible.mvvm.view.fragment.bible_section.search_subsectio
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
@@ -109,7 +109,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         savedInstanceState: Bundle?
     ): View? {
         val myView: View = inflater.inflate(R.layout.fragment_bible_text, container, false)
-        Utility.log("BibleTextFragment: onCreateView")
+        Utils.log("BibleTextFragment: onCreateView")
         listener.setTheme(
             ThemeManager.theme,
             false
@@ -149,10 +149,10 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         btnInterpretationFullScreen.setOnClickListener {
             val allHeightOfLayout =
                 coordinatorLayout.height - (interpretationLayout.height - 10) //Выставляем оптимальный отступ, учитывая высоту interpretationLayout
-            Utility.log("allHeightOfLayout: $allHeightOfLayout")
+            Utils.log("allHeightOfLayout: $allHeightOfLayout")
 
             val halfHeightOfLayout = coordinatorLayout.height / 2
-            Utility.log("halfHeightOfLayout: $halfHeightOfLayout")
+            Utils.log("halfHeightOfLayout: $halfHeightOfLayout")
 
             isFullScreenInterpretationEnabled = true
 
@@ -175,7 +175,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
                 override fun onAnimationRepeat(animation: Animation?) {}
             })
             btnInterpretationFullScreen.startAnimation(animationZoomOut)
-            Utility.slideView(
+            Utils.slideView(
                 fragmentContainerInterpretationLay,
                 500,
                 halfHeightOfLayout,
@@ -212,7 +212,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
             })
             btnExitInterpretationFullScreen.startAnimation(animationZoomOut)
 
-            Utility.slideView(
+            Utils.slideView(
                 fragmentContainerInterpretationLay,
                 500,
                 allHeightOfLayout,
@@ -245,7 +245,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
     private var currentTheme = ThemeManager.theme
     override fun onResume() {
         super.onResume()
-        Utility.log("BibleTextFragment: onResume")
+        Utils.log("BibleTextFragment: onResume")
         //Включаем свайп для листания глав Библии, отключая при этом свайп для навигации между табами
         swipeListener.setViewPagerSwipeState(false)
 
@@ -384,7 +384,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
                     chapterInfo?.bookNumber!!,
                     chapterInfo?.chapterNumber!!
                 ) //Отправляем данные, чтобы сравнить и выяснить, тот ли отображён текст, данные скролла которого были сохранены ранее
-                Utility.log("BibleTextFragment: onPageSelected")
+                Utils.log("BibleTextFragment: onPageSelected")
 
                 val chapterNumber = position + 1
                 chapterInfo!!.chapterNumber = chapterNumber
@@ -418,7 +418,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
     private val dataToRestore: DataToRestoreModel = DataToRestoreModel(-1, -1, -1)
     override fun onPause() {
         super.onPause()
-        Utility.log("BibleTextFragment: onPause")
+        Utils.log("BibleTextFragment: onPause")
         //Включаем свайп для навигации между табами, отключая при этом свайп для листания глав Библии
         swipeListener.setViewPagerSwipeState(true)
 
@@ -541,17 +541,17 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
             listener.disableMultiSelectionIfBottomAppBarBtnClicked()
         } else if (isMultiSelectionEnabled) listener.disableMultiSelection()
 
-        Utility.log("BibleTextFragment: onStop")
+        Utils.log("BibleTextFragment: onStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Utility.log("BibleTextFragment: onDestroyView")
+        Utils.log("BibleTextFragment: onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Utility.log("BibleTextFragment: onDestroy")
+        Utils.log("BibleTextFragment: onDestroy")
         isBtnHomeClicked = false
         isBtnNotesClicked = false
         isBtnSearchClicked = false
@@ -560,7 +560,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
 
     override fun onDetach() {
         super.onDetach()
-        Utility.log("BibleTextFragment: onDetach")
+        Utils.log("BibleTextFragment: onDetach")
     }
 
     //Задержка нужна для того, чтобы скролл устанавливался после того, как сработает onBindViewHolder, чтобы onBindViewHolder не сбросил установленный скролл
@@ -642,14 +642,14 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         if (isInterpretationOpened) {
             if (isFullScreenEnabled) {
                 if (isFullScreenInterpretationEnabled)
-                    Utility.slideView(
+                    Utils.slideView(
                         fragmentContainerInterpretationLay,
                         300,
                         fragmentContainerInterpretationLay.height,
                         (coordinatorLayout.height + heightForChanging) - (interpretationLayout.height - 10),
                         true
                     ).start()
-                else Utility.slideView(
+                else Utils.slideView(
                     fragmentContainerInterpretationLay,
                     300,
                     fragmentContainerInterpretationLay.height,
@@ -658,14 +658,14 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
                 ).start()
             } else {
                 if (isFullScreenInterpretationEnabled)
-                    Utility.slideView(
+                    Utils.slideView(
                         fragmentContainerInterpretationLay,
                         300,
                         fragmentContainerInterpretationLay.height,
                         (fragmentContainerInterpretationLay.height - heightForChanging) - (interpretationLayout.height - 25),
                         true
                     ).start()
-                else Utility.slideView(
+                else Utils.slideView(
                     fragmentContainerInterpretationLay,
                     300,
                     fragmentContainerInterpretationLay.height,
@@ -702,7 +702,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
                 transaction.commit()
             }
 
-            Utility.slideView(fragmentContainerInterpretationLay, 500, 0, halfHeightOfLayout, true)
+            Utils.slideView(fragmentContainerInterpretationLay, 500, 0, halfHeightOfLayout, true)
                 .start()
 
             isInterpretationOpened = true
@@ -720,7 +720,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         }
 
         val animation =
-            Utility.slideView(fragmentContainerInterpretationLay, 500, heightOfLayout, 0, false)
+            Utils.slideView(fragmentContainerInterpretationLay, 500, heightOfLayout, 0, false)
         animation.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
@@ -764,7 +764,7 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
                         if (isFullScreenInterpretationEnabled) coordinatorLayout.height - (interpretationLayout.height - 10)
                         else coordinatorLayout.height / 2
 
-                    Utility.log("heightOfLayout: $heightOfLayout")
+                    Utils.log("heightOfLayout: $heightOfLayout")
                     val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, heightOfLayout)
                     fragmentContainerInterpretationLay.layoutParams = layoutParams
                     fragmentContainerInterpretationLay.requestLayout()

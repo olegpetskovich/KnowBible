@@ -15,9 +15,10 @@ import com.app.bible.knowbible.App
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
+import com.app.bible.knowbible.push.RService
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
-import com.app.bible.knowbible.utility.Utility.Companion.viewAnimatorY
+import com.app.bible.knowbible.utility.Utils
+import com.app.bible.knowbible.utility.Utils.Companion.viewAnimatorY
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var textView: TextView
@@ -48,9 +49,14 @@ class SplashScreenActivity : AppCompatActivity() {
             ThemeModeFragment.BOOK_THEME -> setTheme(ThemeManager.Theme.BOOK)
         }
 
-        //Подгружаем нативку заранее, загрузка есть также в SelectTestamentFragment,
-        //чтобы рекламе также прогружалась при повороте экрана, к примеру
-        App.instance.nativeAdLoader.loadNativeAd()
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForegroundService(Intent(this, RService::class.java))
+            else
+                startService(Intent(this, RService::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         iV = findViewById(R.id.iV)
         textView = findViewById(R.id.tV)
@@ -61,7 +67,7 @@ class SplashScreenActivity : AppCompatActivity() {
             override fun onAnimationRepeat(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
                 val anim =
-                    viewAnimatorY(Utility.convertDpToPx(this@SplashScreenActivity, -70f), iV, 450)
+                    viewAnimatorY(Utils.convertDpToPx(this@SplashScreenActivity, -70f), iV, 450)
                 anim?.addListener(object : Animator.AnimatorListener {
                     override fun onAnimationRepeat(animation: Animator?) {}
                     override fun onAnimationEnd(animation: Animator?) {
@@ -106,5 +112,9 @@ class SplashScreenActivity : AppCompatActivity() {
                     ContextCompat.getColor(applicationContext, R.color.colorStatusBarBookTheme)
             }
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 }

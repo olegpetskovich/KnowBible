@@ -28,21 +28,17 @@ import com.app.bible.knowbible.mvvm.view.callback_interfaces.IChangeFragment
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IThemeChanger
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.ArticlesViewModel
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.muddzdev.styleabletoast.StyleableToast
 import io.grpc.Status
-import kotlinx.android.synthetic.main.fragment_articles.*
 import java.net.ConnectException
 import javax.net.ssl.SSLHandshakeException
 
@@ -69,7 +65,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utility.log("onCreate()")
+        Utils.log("onCreate()")
         retainInstance = true //Без этого кода не будет срабатывать поворот экрана
     }
 
@@ -79,7 +75,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
         savedInstanceState: Bundle?
     ): View? {
         val myView = inflater.inflate(R.layout.fragment_articles, container, false)
-        Utility.log("onCreateView()")
+        Utils.log("onCreateView()")
         listener.setTheme(
             ThemeManager.theme,
             false
@@ -94,16 +90,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
         layNoInternet = myView.findViewById(R.id.layNoInternet)
 
         swipeRefreshLayout.setOnRefreshListener { context?.let { loadData(it) } }
-
-        myFragmentManager.let {
-//            val transaction: FragmentTransaction = it.beginTransaction()
-//            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-//
-//
-//            transaction.replace(R.id.fragment_container_more, )
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-        }
 
 //        //Этот код нужен для того, чтобы приложение открывалось на эмуляторе без ошибки,
 //        //но если его оставлять, то на телефонах приложение запускаться не будет, поэтому закомментировали
@@ -125,7 +111,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                 && (t is SSLHandshakeException
                 || t is ConnectException && t.message!!.contains("EHOSTUNREACH")))
     }
-
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -165,24 +150,24 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                     .addOnCompleteListener(it) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            Utility.log("signInAnonymously:success")
+                            Utils.log("signInAnonymously:success")
 //                            Toast.makeText(context, "Authentication success.", Toast.LENGTH_SHORT).show()
                             loadData(requireContext())
                         } else {
                             // If sign in fails, display a message to the user.
-                            Utility.log("signInAnonymously:failure: " + task.exception)
+                            Utils.log("signInAnonymously:failure: " + task.exception)
 //                            Toast.makeText(context, "Authentication failed: " + task.exception, Toast.LENGTH_LONG).show()
                         }
                     }
             }
         }
 
-        Utility.log("onStart()")
+        Utils.log("onStart()")
     }
 
     override fun onResume() {
         super.onResume()
-        Utility.log("onResume()")
+        Utils.log("onResume()")
 
         if (articlesRVAdapter != null)
             articlesRVAdapter!!.notifyDataSetChanged()
@@ -202,7 +187,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
     override fun onPause() {
         super.onPause()
-        Utility.log("onPause()")
+        Utils.log("onPause()")
         listener.setShowHideArticlesInfoButton(View.GONE) //Устанавливаем видимость кнопки btnArticlesInfo
     }
 
@@ -219,15 +204,15 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 //        if (!context.getDatabasePath(ARTICLES_DATA_BASE_NAME).exists()) {
 
         if (App.articlesData == null) {
-            if (Utility.isNetworkAvailable(context)!!) { //Если интернет есть - грузим данные, если интернета нет, то работа метода прекращается вызовом return
+            if (Utils.isNetworkAvailable(context)!!) { //Если интернет есть - грузим данные, если интернета нет, то работа метода прекращается вызовом return
                 //Убираем swipeRefreshLayout в случае, когда интернет есть, чтобы пользователь не делал не нужных запросов и не тратил запас предоставленных ресурсов Firebase.
                 //То есть обновление списка можно только в случае отсутствия интернета
                 swipeRefreshLayout.isRefreshing = false
                 swipeRefreshLayout.visibility = View.GONE
                 dataRefArticles
                     .get()
-                    .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { data ->
-                        Utility.log("Internet request")
+                    .addOnSuccessListener { data ->
+                        Utils.log("Internet request")
                         var articlesData =
                             data.toObjects(ArticleModel::class.java) //Здесь ради удобства использования используется модел на Java
 
@@ -279,17 +264,12 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
                                                 App.articlesData =
                                                     articlesData //Сохраняем данные в статическое поле, чтобы закешировать данные на время работы приложения. Это сэкономит количество делаемых запросов для получения данных. Один раз получили данные и они используется на протяжении всего времени, когда приложение включено.
-
-                                                //Этот вариант может понадобиться в случае, если будет настройка "Сохранить статьи локально"
-//                                                articlesViewModel.createArticlesDB()
-//                                                articlesViewModel.setArticles(articlesData) //Сохраняем данные в локальную БД, чтобы закешировать данные. Это сэкономит количество делаемых запросов для получения данных. Один раз получили данные и они используется на протяжении всего времени, когда приложение включено.
                                             }
                                         }
-
                                     })
                             }
                         }
-                    })
+                    }
                     .addOnFailureListener { e ->
                         progressBarArticle.visibility = View.GONE
                         layNoInternet.visibility = View.GONE
@@ -301,7 +281,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                             R.style.my_toast
                         ).show()
 
-                        Utility.log(e.toString())
+                        Utils.log(e.toString())
                     }
             } else {
                 swipeRefreshLayout.isRefreshing = false
@@ -318,7 +298,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                 return
             }
         } else {
-            Utility.log("Local request")
+            Utils.log("Local request")
 
             swipeRefreshLayout.isRefreshing = false
             swipeRefreshLayout.visibility = View.GONE
@@ -367,16 +347,16 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
     override fun onStop() {
         super.onStop()
-        Utility.log("onStop()")
+        Utils.log("onStop()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Utility.log("onDestroyView()")
+        Utils.log("onDestroyView()")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Utility.log("onDestroy()")
+        Utils.log("onDestroy()")
     }
 }

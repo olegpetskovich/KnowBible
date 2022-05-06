@@ -8,7 +8,7 @@ import com.app.bible.knowbible.mvvm.model.*
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.search_subsection.SearchFragment.Companion.NEW_TESTAMENT_SECTION
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.search_subsection.SearchFragment.Companion.OLD_TESTAMENT_SECTION
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -387,11 +387,11 @@ class BibleTextDBHelper {
     }
 
     fun updateBibleText(bibleTextModel: BibleTextModel) {
-        val text = Utility.getClearedStringFromTags(bibleTextModel.text)
+        val text = Utils.getClearedStringFromTags(bibleTextModel.text)
         cv.put("text", text)
 
-        Utility.log("Text before: " + bibleTextModel.text)
-        Utility.log("Text after: $text")
+        Utils.log("Text before: " + bibleTextModel.text)
+        Utils.log("Text after: $text")
 
         dataBase.update("verses", cv, "book_number = ? AND chapter = ? AND verse = ?", arrayOf(bibleTextModel.book_number.toString(), bibleTextModel.chapter_number.toString(), bibleTextModel.verse_number.toString()))
     }

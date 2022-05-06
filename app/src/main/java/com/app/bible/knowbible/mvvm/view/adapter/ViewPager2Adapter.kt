@@ -18,7 +18,7 @@ import com.app.bible.knowbible.mvvm.model.DataToRestoreModel
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IThemeChanger
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.BibleTextFragment.Companion.DATA_TO_RESTORE
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -98,7 +98,7 @@ class ViewPager2Adapter(private val context: Context, private val chaptersTextLi
                         }
                     }
 
-                    Utility.log("BibleTextFragment: onBindViewHolder")
+                    Utils.log("BibleTextFragment: onBindViewHolder")
                     rvAdapter = BibleTextRVAdapter(context, textList, myFragmentManager)
                     rvAdapter.setRecyclerViewThemeChangerListener(themeChanger) //Для RecyclerView тему нужно обновлять отдельно от смены темы для всего фрагмента. Если менять тему только для всего фрагмента, не меняя при этом тему для списка, то в списке тема не поменяется.
                     rvAdapter.setMultiSelectionPanelListener(multiSelectionListener)
@@ -139,9 +139,9 @@ class ViewPager2Adapter(private val context: Context, private val chaptersTextLi
         val jsonScrollData = saveLoadData.loadString(DATA_TO_RESTORE)
         if (jsonScrollData != null && jsonScrollData.isNotEmpty()) {
             val dataToRestoreModel: DataToRestoreModel = Gson().fromJson(jsonScrollData, DataToRestoreModel::class.java)
-            Utility.log("dataToRestoreModel.bookNumber: " + dataToRestoreModel.bookNumber + ", dataToRestoreData.bookNumber: " + dataToRestoreData.bookNumber)
-            Utility.log("dataToRestoreModel.chapterNumber: " + (dataToRestoreModel.chapterNumber - 1) + ", dataToRestoreData.chapterNumber: " + dataToRestoreData.chapterNumber)
-            Utility.log("dataToRestoreModel.scrollPosition: " + dataToRestoreModel.scrollPosition)
+            Utils.log("dataToRestoreModel.bookNumber: " + dataToRestoreModel.bookNumber + ", dataToRestoreData.bookNumber: " + dataToRestoreData.bookNumber)
+            Utils.log("dataToRestoreModel.chapterNumber: " + (dataToRestoreModel.chapterNumber - 1) + ", dataToRestoreData.chapterNumber: " + dataToRestoreData.chapterNumber)
+            Utils.log("dataToRestoreModel.scrollPosition: " + dataToRestoreModel.scrollPosition)
 
             if (dataToRestoreModel.scrollPosition != -1 //Проверяем, сохранена ли какая-то позиция ранее или же значение равно -1 (то есть ничего не было сохранено)
             ) {

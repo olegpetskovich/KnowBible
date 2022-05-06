@@ -31,8 +31,8 @@ import com.app.bible.knowbible.mvvm.view.dialog.VerseDialog
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.FontCache
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
-import com.app.bible.knowbible.utility.Utility.Companion.convertDpToPx
+import com.app.bible.knowbible.utility.Utils
+import com.app.bible.knowbible.utility.Utils.Companion.convertDpToPx
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
@@ -225,12 +225,12 @@ class BibleTextRVAdapter(private val context: Context, private val models: Array
 
                 multiSelectionListener.openMultiSelectionPanel()
 
-                Utility.log("Long click listener worked")
+                Utils.log("Long click listener worked")
                 return@setOnLongClickListener true
             }
 
             itemView.setOnClickListener {
-                Utility.log("{\"book_number\":" + models[adapterPosition].book_number + ", "
+                Utils.log("{\"book_number\":" + models[adapterPosition].book_number + ", "
                         + "\"chapter_number\":" + models[adapterPosition].chapter_number + ", "
                         + "\"verse_number\":" + models[adapterPosition].verse_number + "}")
 

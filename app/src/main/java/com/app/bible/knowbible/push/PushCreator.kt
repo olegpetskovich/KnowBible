@@ -23,7 +23,7 @@ object PushCreator {
         val nm = context.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
         nm.createPushChannel()
         val body = RemoteViews(context.packageName, R.layout.push_layout)
-        body.apply { setOnClickPendingIntent(R.id.btnRead, context.clickGoal()) }
+        body.apply { setOnClickPendingIntent(R.id.btnRead, context.clickGoal(-1)) }
 
         val ncb = context.returnBuilder(body)
         nm.notify(pushId, ncb.build())
@@ -70,7 +70,7 @@ object PushCreator {
                 .setColor(ContextCompat.getColor(applicationContext, android.R.color.white))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
-                .setFullScreenIntent(clickGoal(), true)
+                .setFullScreenIntent(clickGoal(-1), true)
                 .setCustomContentView(body)
         }
     }

@@ -9,8 +9,7 @@ import android.widget.RemoteViews
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import com.app.bible.knowbible.R
-import com.app.bible.knowbible.push.accessory.clickGoal
-import com.app.bible.knowbible.push.accessory.sec
+import com.app.bible.knowbible.push.accessory.*
 
 class RService : Service() {
     companion object {
@@ -60,7 +59,9 @@ class RService : Service() {
 
     private fun setPanelOnClickGoals() =
         RemoteViews(applicationContext.packageName, R.layout.r_service_panel_view).apply {
-            setOnClickPendingIntent(R.id.tvPanelText, clickGoal())
+            setOnClickPendingIntent(R.id.serviceBtn1, clickGoal(PUSH_ID_ARTICLES))
+            setOnClickPendingIntent(R.id.serviceBtn2, clickGoal(PUSH_ID_DAILY_VERSE))
+            setOnClickPendingIntent(R.id.serviceBtn3, clickGoal(PUSH_ID_SEARCH))
         }
 
     private fun NotificationManager.createServiceChannel() {

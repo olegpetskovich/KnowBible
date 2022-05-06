@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.app.bible.knowbible.mvvm.model.HighlightedBibleTextInfoModel
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import io.reactivex.Single
 import java.util.*
 
@@ -131,7 +131,7 @@ class HighlightedBibleTextInfoDBHelper private constructor() {
         cv.put("text_bold", highlightedBibleTextInfo.isTextBold)
         cv.put("text_underline", highlightedBibleTextInfo.isTextUnderline)
 
-        Utility.log("Add")
+        Utils.log("Add")
 
         return dataBase.insert("my_bible_text_info_table", null, cv) //Добавляем информацию о тексте и возвращаем id, под которым эти данные добавлены в БД
     }
@@ -145,13 +145,13 @@ class HighlightedBibleTextInfoDBHelper private constructor() {
         cv.put("text_bold", highlightedBibleTextInfo.isTextBold)
         cv.put("text_underline", highlightedBibleTextInfo.isTextUnderline)
 
-        Utility.log("Update")
+        Utils.log("Update")
 
         dataBase.update("my_bible_text_info_table", cv, "id = ?", arrayOf(highlightedBibleTextInfo.id.toString()))
     }
 
     fun deleteBibleTextInfo(bibleTextInfoId: Long) {
-        Utility.log("Delete")
+        Utils.log("Delete")
 
         dataBase.delete("my_bible_text_info_table", "id = $bibleTextInfoId", null)
     }
@@ -173,7 +173,7 @@ class HighlightedBibleTextInfoDBHelper private constructor() {
 
     private inner class DBHelp(context: Context) : SQLiteOpenHelper(context, BIBLE_TEXT_INFO_BASE_NAME, null, 1) {
         override fun onCreate(db: SQLiteDatabase) {
-            Utility.log("DataBase created")
+            Utils.log("DataBase created")
             // Создаем таблицу с полями
             db.execSQL("create table my_bible_text_info_table ("
                     + "id integer primary key autoincrement,"

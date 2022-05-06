@@ -39,7 +39,7 @@ import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.android.material.radiobutton.MaterialRadioButton
 import com.muddzdev.styleabletoast.StyleableToast
 import kotlinx.coroutines.Dispatchers
@@ -164,7 +164,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
                     //Если нынешний текст, который ищет пользователь, совпадает с тем, который уже вписан в поле ввода,
                     //то просто закрывается клавиатура и метод поиска не выполняется, чтобы не выполнять его лишний раз, если резльутаты поиска и так есть
                     if (previousTextForSearch == etSearch.text.toString()) {
-                        Utility.hideKeyboard(requireActivity())
+                        Utils.hideKeyboard(requireActivity())
                         return@OnEditorActionListener true
                     }
                     previousTextForSearch = etSearch.text.toString()
@@ -188,7 +188,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
 
     private fun clearFoundVersesList() {
         if (foundVerses.size != 0) foundVerses.clear()
-        Utility.log("clearFoundVersesList")
+        Utils.log("clearFoundVersesList")
     }
 
     private fun searchText(searchText: String) {
@@ -207,7 +207,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
                 rbNewTestament.isChecked -> searchingSection = NEW_TESTAMENT_SECTION
                 else -> {}
             }
-            Utility.hideKeyboard(requireActivity())
+            Utils.hideKeyboard(requireActivity())
 
             val mainHandler = Handler(requireContext().mainLooper)
             val myRunnable = Runnable {
@@ -294,7 +294,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
         //Восстанавливаем позицию скролла при возвращении на фрагмент
 //        if (itemPosition != -1) (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(itemPosition, 0)
 
-        Utility.log("etSearch: " + etSearch.text.toString())
+        Utils.log("etSearch: " + etSearch.text.toString())
 
         //Есть класс MyRadioButton, но он не меняет цвета должным образом, поэтому приходится менять цвета здесь
         when (SaveLoadData(requireContext()).loadString(ThemeModeFragment.THEME_NAME_KEY)) {
@@ -369,7 +369,7 @@ class SearchFragment : Fragment(), IChangeFragment, ISelectBibleText {
 
     override fun onPause() {
         super.onPause()
-        activity?.let { Utility.hideKeyboard(it) }
+        activity?.let { Utils.hideKeyboard(it) }
         //Сохраняем позицию айтема, чтобы потом можно было её восстановить после обновления адаптера.
         //Обновлять адаптер нужно для того, чтобы в случае смены темы, все айтемы обновили свои цвета, если не обновлять адаптер, то с этим возникают проблемы
 //        if (recyclerView.layoutManager != null)

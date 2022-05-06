@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -30,8 +29,11 @@ import com.app.bible.knowbible.mvvm.view.fragment.bible_section.notes_subsection
 import com.app.bible.knowbible.mvvm.view.fragment.bible_section.search_subsection.SearchFragment
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
+import com.app.bible.knowbible.push.accessory.PUSH_ID_DAILY_VERSE
+import com.app.bible.knowbible.push.accessory.PUSH_ID_SEARCH
+import com.app.bible.knowbible.push.accessory.PUSH_KEY
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -84,7 +86,7 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
 
         //!Utility.isTranslationsDownloaded() - Проверяем, если в папке, которая содержит БД с переводами Библии, пусто, то открываем фрагмент, в котором будет представлен список переводов. Пользователь должен скачать как минмум один перевод Библии, чтобы пользоваться приложением полноценно.
         //Если же хотя бы один перевод скачан, то в последующие разы будет открываться фрагмент выбора заветов (SelectTestamentFragment).
-        if (!Utility.isTranslationsDownloaded(requireContext())) {
+        if (!Utils.isTranslationsDownloaded(requireContext())) {
             openBibleTranslationsFragment()
         }
         //!Utility.isSelectedTranslationDownloaded() - Проверка на то, скачан ли перевод, выбранный ранее, или же перевод удалён и в saveLoadData хранится лишь имя скачанного файла, но его самого не существует.
@@ -92,7 +94,7 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
         //потому что в действительности он будет удалён
         else if (saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO) != null
             && saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO)!!.isNotEmpty()
-            && !Utility.isSelectedTranslationDownloaded(
+            && !Utils.isSelectedTranslationDownloaded(
                 requireContext(),
                 Gson().fromJson(
                     saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO),
@@ -107,6 +109,51 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                 Toast.LENGTH_SHORT,
                 R.style.my_toast
             ).show()
+        } else if (requireActivity().intent.hasExtra(PUSH_KEY) && requireActivity().intent.getIntExtra(
+                PUSH_KEY, -1
+            ) == PUSH_ID_DAILY_VERSE
+        ) {
+            requireActivity().intent.putExtra(
+                PUSH_KEY,
+                -1
+            ) //Устанавливаем -1, чтобы при возврате на фрагмент не перебрасывало снова
+
+            val dailyVerseFragment = DailyVerseFragment()
+            dailyVerseFragment.setRootFragmentManager(myFragmentManager)
+            val transaction: FragmentTransaction = myFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_left,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            )
+            transaction.replace(
+                R.id.fragment_container_bible,
+                dailyVerseFragment
+            )
+            transaction.addToBackStack(null)
+            transaction.commit()
+        } else if (requireActivity().intent.hasExtra(PUSH_KEY) && requireActivity().intent.getIntExtra(
+                PUSH_KEY, -1
+            ) == PUSH_ID_SEARCH
+        ) {
+            requireActivity().intent.putExtra(
+                PUSH_KEY,
+                -1
+            ) //Устанавливаем -1, чтобы при возврате на фрагмент не перебрасывало снова
+
+            val searchFragment = SearchFragment()
+            searchFragment.setRootFragmentManager(myFragmentManager)
+            val transaction: FragmentTransaction = myFragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_left,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            )
+            transaction.replace(R.id.fragment_container_bible, searchFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
         //Код, предназначенный для восстановления стэка фрагментов то ли после поворота экрана, то ли в случае, когда человек закрыл приложение из диспетчера задача
         else if (dataToRestoreModel != null && dataToRestoreModel!!.bookNumber != -1) {
@@ -161,7 +208,7 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                     //Проверка на то, скачан ли перевод, выбранный ранее, или же перевод удалён и в saveLoadData хранится имя скачанного файла, но его самого не существует.
                     //Если эту проверку не осуществлять, то в случае удаления выбранного перевода, программа будет пытаться открыть его, но не сможет,
                     //потому что в действительности он будет удалён
-                    if (Utility.isSelectedTranslationDownloaded(
+                    if (Utils.isSelectedTranslationDownloaded(
                             requireContext(),
                             bibleTranslationInfo
                         )
@@ -330,42 +377,42 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                         Runnable {
                             TapTargetSequence(activity)
                                 .targets(
-                                    Utility.getTapTargetButton(
+                                    Utils.getTapTargetButton(
                                         btnNotes,
                                         requireContext(),
                                         R.string.btn_notes_title,
                                         R.string.btn_notes_description,
-                                        Utility.convertPxToDp(
+                                        Utils.convertPxToDp(
                                             btnNotes.width.toFloat(),
                                             requireContext()
                                         ).toInt()
                                     ),
-                                    Utility.getTapTargetButton(
+                                    Utils.getTapTargetButton(
                                         btnDailyVerse,
                                         requireContext(),
                                         R.string.btn_daily_verse_title,
                                         R.string.btn_daily_verse_description,
-                                        Utility.convertPxToDp(
+                                        Utils.convertPxToDp(
                                             btnDailyVerse.width.toFloat(),
                                             requireContext()
                                         ).toInt()
                                     ),
-                                    Utility.getTapTargetButton(
+                                    Utils.getTapTargetButton(
                                         btnSearch,
                                         requireContext(),
                                         R.string.btn_search_title,
                                         R.string.btn_search_title_description,
-                                        Utility.convertPxToDp(
+                                        Utils.convertPxToDp(
                                             btnSearch.width.toFloat(),
                                             requireContext()
                                         ).toInt()
                                     ),
-                                    Utility.getTapTargetButton(
+                                    Utils.getTapTargetButton(
                                         btnOldTestamentInfo,
                                         requireContext(),
                                         R.string.btn_testament_information_title,
                                         R.string.btn_testament_information_description,
-                                        Utility.convertPxToDp(
+                                        Utils.convertPxToDp(
                                             btnOldTestamentInfo.width.toFloat(),
                                             requireContext()
                                         ).toInt()

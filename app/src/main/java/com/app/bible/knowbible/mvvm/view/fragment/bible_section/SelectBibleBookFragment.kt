@@ -27,7 +27,7 @@ import com.app.bible.knowbible.mvvm.view.dialog.BookInfoDialog
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_select_testament.*
@@ -126,8 +126,8 @@ class SelectBibleBookFragment : Fragment(), IChangeFragment, IThemeChanger, ISel
                                         Runnable {
                                             TapTargetSequence(activity)
                                                     .targets(
-                                                            bookIcon?.let { Utility.getTapTargetButton(it, requireContext(), R.string.btn_notes_title, R.string.btn_notes_description, Utility.convertPxToDp(btnNotes.width.toFloat(), requireContext()).toInt()) },
-                                                            btnBookInfo?.let { Utility.getTapTargetButton(it, requireContext(), R.string.btn_testament_information_title, R.string.btn_testament_information_description, Utility.convertPxToDp(btnOldTestamentInfo.width.toFloat(), requireContext()).toInt()) }
+                                                            bookIcon?.let { Utils.getTapTargetButton(it, requireContext(), R.string.btn_notes_title, R.string.btn_notes_description, Utils.convertPxToDp(btnNotes.width.toFloat(), requireContext()).toInt()) },
+                                                            btnBookInfo?.let { Utils.getTapTargetButton(it, requireContext(), R.string.btn_testament_information_title, R.string.btn_testament_information_description, Utils.convertPxToDp(btnOldTestamentInfo.width.toFloat(), requireContext()).toInt()) }
                                                     )
                                                     .start()
                                         }
@@ -158,8 +158,8 @@ class SelectBibleBookFragment : Fragment(), IChangeFragment, IThemeChanger, ISel
 
                                 TapTargetSequence(activity)
                                         .targets(
-                                                Utility.getTapTargetButton(bookIcon!!, requireContext(), R.string.book_icon_title, R.string.book_icon_description, Utility.convertPxToDp(bookIcon.width.toFloat(), requireContext()).toInt()),
-                                                Utility.getTapTargetButton(btnBookInfo!!, requireContext(), R.string.btn_book_info_title, R.string.btn_book_info_description, Utility.convertPxToDp(btnBookInfo.width.toFloat(), requireContext()).toInt())
+                                                Utils.getTapTargetButton(bookIcon!!, requireContext(), R.string.book_icon_title, R.string.book_icon_description, Utils.convertPxToDp(bookIcon.width.toFloat(), requireContext()).toInt()),
+                                                Utils.getTapTargetButton(btnBookInfo!!, requireContext(), R.string.btn_book_info_title, R.string.btn_book_info_description, Utils.convertPxToDp(btnBookInfo.width.toFloat(), requireContext()).toInt())
                                         )
                                         .start()
                             }

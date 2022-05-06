@@ -62,14 +62,14 @@ import com.app.bible.knowbible.mvvm.view.fragment.more_section.ThemeModeFragment
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.mvvm.viewmodel.BibleDataViewModel
 import com.app.bible.knowbible.push.PushCreator
-import com.app.bible.knowbible.push.RService
 import com.app.bible.knowbible.push.UnlockBR
+import com.app.bible.knowbible.push.accessory.PUSH_ID_ARTICLES
+import com.app.bible.knowbible.push.accessory.PUSH_KEY
 import com.app.bible.knowbible.utility.SaveLoadData
-import com.app.bible.knowbible.utility.Utility
-import com.app.bible.knowbible.utility.Utility.Companion.convertDpToPx
-import com.app.bible.knowbible.utility.Utility.Companion.getCurrentTime
-import com.app.bible.knowbible.utility.Utility.Companion.log
-import com.app.bible.knowbible.utility.Utility.Companion.viewAnimatorX
+import com.app.bible.knowbible.utility.Utils
+import com.app.bible.knowbible.utility.Utils.Companion.convertDpToPx
+import com.app.bible.knowbible.utility.Utils.Companion.getCurrentTime
+import com.app.bible.knowbible.utility.Utils.Companion.viewAnimatorX
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
@@ -86,7 +86,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
@@ -190,15 +189,6 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
         //Отмечаем время захода в приложение, чтобы пуш не приходил тогда, когда юзер уже зашёл в приложение,
         //Потому что пуш должен приходить только тогда, когда юзер не заходил в прилу больше 1 суток
         saveLoadData.saveLong(UnlockBR.SHOWED_PUSH_TIME_KEY, getCurrentTime())
-
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startForegroundService(Intent(this, RService::class.java))
-            else
-                startService(Intent(this, RService::class.java))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(PushCreator.pushId)
 
 
@@ -213,7 +203,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val a = abs(verticalOffset) - appBarLayout.totalScrollRange
-            Utility.log("Offset: $a")
+            Utils.log("Offset: $a")
             if (isBibleTextFragmentOpened) {
                 if (a != 0) {
                     //Expanded
@@ -235,8 +225,12 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
                                            Объяснение вызова этого метода: https://stackoverflow.com/questions/27601920/android-viewpager-with-tabs-save-state, https://developer.android.com/reference/android/support/v4/view/ViewPager#setoffscreenpagelimit*/
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
-        viewPager.currentItem =
-            currentTabNumber //устанавливаем, чтобы при открытии приложения, сразу включался второй таб
+
+        if (intent.hasExtra(PUSH_KEY) && intent.getIntExtra(PUSH_KEY, -1) == PUSH_ID_ARTICLES)
+            viewPager.currentItem = tabArticlesNumber
+        else
+            viewPager.currentItem =
+                tabBibleNumber //устанавливаем, чтобы при открытии приложения, сразу включался второй таб
 
         //Этот код нужен, чтобы задать полю isTabBibleSelected значение в тех случаях, когда выбран таб "Библия" и когда он не выбран
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
@@ -257,14 +251,14 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
                                 Runnable {
                                     TapTargetSequence(this@MainActivity)
                                         .targets(
-                                            Utility.getTapTargetButton(
+                                            Utils.getTapTargetButton(
                                                 tabLayout.getTabAt(
                                                     tabArticlesNumber
                                                 )?.view!!,
                                                 this@MainActivity,
                                                 R.string.btn_tab_articles_title,
                                                 R.string.btn_tab_articles_description,
-                                                Utility.convertPxToDp(
+                                                Utils.convertPxToDp(
                                                     tabLayout.getTabAt(tabArticlesNumber)?.view!!.width.toFloat(),
                                                     this@MainActivity
                                                 ).toInt() - 60
@@ -407,44 +401,6 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
             transaction.commit()
         }
 
-//        btnArticlesInfo.setOnClickListener {
-//            articlesInfoDialog = ArticlesInfoDialog(this)
-////            articlesInfoDialog.isCancelable = false
-//            articlesInfoDialog!!.show(myFragmentManager, "Articles Info Dialog")
-//        }
-
-//        donationLay.setOnClickListener {
-//            myFragmentManager.let {
-//                val transaction: FragmentTransaction = it.beginTransaction()
-//                transaction.setCustomAnimations(
-//                    R.anim.enter_from_right,
-//                    R.anim.exit_to_left,
-//                    R.anim.enter_from_left,
-//                    R.anim.exit_to_right
-//                )
-//                val donateFragment = SupportMinistryFragment()
-//                donateFragment.setRootFragmentManager(myFragmentManager)
-//
-//                when (currentTabNumber) {
-//                    0 -> transaction.replace(
-//                        R.id.fragment_container_articles,
-//                        donateFragment
-//                    ) // Таб под номером 0 - это таб Статьи
-//                    1 -> transaction.replace(
-//                        R.id.fragment_container_bible,
-//                        donateFragment
-//                    ) // Таб под номером 1 - это таб Библия
-//                    2 -> transaction.replace(
-//                        R.id.fragment_container_more,
-//                        donateFragment
-//                    ) // Таб под номером 2 - это таб Ещё
-//                }
-//
-//                transaction.addToBackStack(null)
-//                transaction.commit()
-//            }
-//        }
-
         btnDeleteNote.setOnClickListener {
             val mainHandler = Handler(mainLooper)
             if (noteData.id != -1) {
@@ -581,7 +537,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
             //Проверка на то, скачан ли перевод, выбранный ранее, или же перевод удалён и в saveLoadData хранится имя скачанного файла, но его самого не существует.
             //Если эту проверку не осуществлять, то в случае удаления выбранного перевода, программа будет пытаться открыть его, но не сможет,
             //потому что в действительности он будет удалён
-            if (Utility.isSelectedTranslationDownloaded(this, bibleTranslationInfo)) {
+            if (Utils.isSelectedTranslationDownloaded(this, bibleTranslationInfo)) {
                 val bibleInfoViewModel = ViewModelProvider(this).get(BibleDataViewModel::class.java)
                 bibleInfoViewModel.openDatabase(getExternalFilesDir(getString(R.string.folder_name)).toString() + "/" + bibleTranslationInfo.translationDBFileName)
 
@@ -1367,36 +1323,36 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
                 tabLayout.getTabAt(i)?.setIcon(tabIcons[i])
             }
 
-            if (ThemeManager.theme == ThemeManager.Theme.BOOK)
-                tabLayout.getTabAt(i)?.icon?.colorFilter = PorterDuffColorFilter(
-                    ContextCompat.getColor(
-                        this@MainActivity,
-                        R.color.colorUnselectedTabTextBookTheme
-                    ), PorterDuff.Mode.SRC_IN
-                )
-            else
-                tabLayout.getTabAt(i)?.icon?.colorFilter = PorterDuffColorFilter(
-                    ContextCompat.getColor(
-                        this@MainActivity,
-                        R.color.colorGray
-                    ), PorterDuff.Mode.SRC_IN
-                )
-            if (i == currentTabNumber)
-                if (ThemeManager.theme == ThemeManager.Theme.BOOK)
-                    tabLayout.getTabAt(i)?.icon?.colorFilter = PorterDuffColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.colorIconTabBookTheme
-                        ), PorterDuff.Mode.SRC_IN
-                    )
-                else
-                    tabLayout.getTabAt(i)?.icon?.colorFilter = PorterDuffColorFilter(
-                        ContextCompat.getColor(
-                            this@MainActivity,
-                            R.color.colorIconTabLightTheme
-                        ), PorterDuff.Mode.SRC_IN
-                    )
+            if (ThemeManager.theme == ThemeManager.Theme.BOOK) setTabIconColor(
+                i,
+                R.color.colorUnselectedTabTextBookTheme
+            )
+            else setTabIconColor(i, R.color.colorGray)
+
+            if (intent.hasExtra(PUSH_KEY) && intent.getIntExtra(PUSH_KEY, -1) == PUSH_ID_ARTICLES) {
+                if (i == tabArticlesNumber) selSelectedTabIconColor(i)
+            } else if (i == currentTabNumber) selSelectedTabIconColor(i)
         }
+        if (intent.hasExtra(PUSH_KEY) && intent.getIntExtra(PUSH_KEY, -1) == PUSH_ID_ARTICLES) {
+            intent.putExtra(PUSH_KEY, "")
+        }
+    }
+
+    private fun selSelectedTabIconColor(i: Int) {
+        if (ThemeManager.theme == ThemeManager.Theme.BOOK) setTabIconColor(
+            i,
+            R.color.colorIconTabBookTheme
+        )
+        else setTabIconColor(i, R.color.colorIconTabLightTheme)
+    }
+
+    private fun setTabIconColor(i: Int, colorRes: Int) {
+        tabLayout.getTabAt(i)?.icon?.colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(
+                this@MainActivity,
+                colorRes
+            ), PorterDuff.Mode.SRC_IN
+        )
     }
 
     //Обновляем цвета иконок и текста на табах, потому что если в тёмной и светлой теме цвета на текста и иконок одинаковые в TabLayout,
@@ -1422,16 +1378,6 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 
     override fun setTabNumber(tabNumber: Int) {
         this.currentTabNumber = tabNumber
-
-        //На версиях андроид ниже 21 цвет иконок на табах постоянно сбивается на чёрный при навигации по фрагментам,
-        //решением стало постоянное обновление цвета иконок, а задержка нужна для того, чтобы цвет снова не сбивался на чёрный после того,
-        //как в методе setIconForTabs() был установлен нужный цвет иконкам
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            GlobalScope.launch(Dispatchers.Main) {
-                delay(50)
-                setIconForTabs()
-            }
-        }
     }
 
     override fun setBibleTextFragment(bibleTextFragment: BibleTextFragment) {
@@ -1469,7 +1415,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 
     override fun onStop() {
         super.onStop()
-        Utility.log("Activity onStop()")
+        Utils.log("Activity onStop()")
         //Скорее всего этот код можно будет вовсе удалить, но пока оставляю на всякий случай.
         //Закрываем подключение к Базе данных Статей и удаляем БД. Делать это нужно именно в здесь в активити, потому что onStop вызывается именно при закрытии активити,
         // то есть так, как и надо. Если вызывать в onStop фрагмента, то он будет пересоздавать при каждом открытии и другого фрагмента, а это не подходящий вариант,
@@ -1480,7 +1426,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 
     override fun onDestroy() {
         super.onDestroy()
-        Utility.log("Activity onDestroy()")
+        Utils.log("Activity onDestroy()")
         App.articlesData =
             null //Очищаем переменную, хранящую данные статьей при закрытии приложения
     }
@@ -1528,7 +1474,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
             //Если никакой перевод не скачан или скачанный перевод был удалён, то при нажатии кнопки назад в фрагменте BibleTranslationFragment приложение будет закрыто
             if (!isTranslationDownloaded || saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO) != null
                 && saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO)!!.isNotEmpty()
-                && !Utility.isSelectedTranslationDownloaded(
+                && !Utils.isSelectedTranslationDownloaded(
                     this,
                     Gson().fromJson(
                         saveLoadData.loadString(TRANSLATION_DB_FILE_JSON_INFO),
@@ -1546,7 +1492,7 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 //            }
         }
 
-        Utility.hideKeyboard(this) //Вызываем этот метод, чтобы при нажатии стрелки назад закрывать клавиатуру, если она открыта
+        Utils.hideKeyboard(this) //Вызываем этот метод, чтобы при нажатии стрелки назад закрывать клавиатуру, если она открыта
 
         //Устанавливаем на переменную isBackButtonClicked значение true, когда кнопка "Назад" была нажата. Это значение нужно для BibleTextFragment.
         //А по скольку onBackPressed срабатывает раньше, чем onPause, то после того, как пользователь нажал кнопку "Назад" и сработал onBackPressed,

@@ -2,7 +2,6 @@ package com.app.bible.knowbible.mvvm.view.adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
@@ -54,25 +53,9 @@ class ArticlesRVAdapter(private val context: Context, private val models: ArrayL
         setAnimation(holder.itemView, position)
 
         when (saveLoadData.loadString(APP_LANGUAGE_CODE_KEY)) {
-            "en" -> {
-                holder.tvArticleName.text = models[position].article_name_en
-
-                models[position].article_text_en =
-                    models[position].article_text_en.replace("NL", "\n") //NL - New Line
-            }
-            "ru" -> {
-                holder.tvArticleName.text = models[position].article_name_ru
-
-                models[position].article_text_ru =
-                    models[position].article_text_ru.replace("NL", "\n") //NL - New Line
-            }
-            "uk" -> {
-                holder.tvArticleName.text = models[position].article_name_uk
-
-                models[position].article_text_uk =
-                    models[position].article_text_uk.replace("NL", "\n") //NL - New Line
-            }
-
+            "en" -> holder.tvArticleName.text = models[position].article_name_en
+            "ru" -> holder.tvArticleName.text = models[position].article_name_ru
+            "uk" -> holder.tvArticleName.text = models[position].article_name_uk
         }
 
         if (models[position].isIs_article_new) {
@@ -151,43 +134,13 @@ class ArticlesRVAdapter(private val context: Context, private val models: ArrayL
                     return@setOnClickListener
                 }
 
-                val bitmap = (ivArticleImage.drawable as BitmapDrawable).bitmap
-                if (bitmap != null) {
-                    val articleFragment = ArticleFragment()
-                    when (saveLoadData.loadString(APP_LANGUAGE_CODE_KEY)) {
-                        "ru" -> {
-                            articleFragment.setArticleData(
-                                bitmap,
-                                models[absoluteAdapterPosition].article_name_ru,
-                                models[absoluteAdapterPosition].article_text_ru,
-                                models[absoluteAdapterPosition].author_name_ru,
-                                models[absoluteAdapterPosition].telegram_link,
-                                models[absoluteAdapterPosition].instagram_link
-                            )
-                        }
-                        "uk" -> {
-                            articleFragment.setArticleData(
-                                bitmap,
-                                models[absoluteAdapterPosition].article_name_uk,
-                                models[absoluteAdapterPosition].article_text_uk,
-                                models[absoluteAdapterPosition].author_name_uk,
-                                models[absoluteAdapterPosition].telegram_link,
-                                models[absoluteAdapterPosition].instagram_link
-                            )
-                        }
-                        "en" -> {
-                            articleFragment.setArticleData(
-                                bitmap,
-                                models[absoluteAdapterPosition].article_name_en,
-                                models[absoluteAdapterPosition].article_text_en,
-                                models[absoluteAdapterPosition].author_name_en,
-                                models[absoluteAdapterPosition].telegram_link,
-                                models[absoluteAdapterPosition].instagram_link
-                            )
-                        }
-                    }
-                    fragmentChanger.changeFragment(articleFragment)
+                val articleFragment = ArticleFragment()
+                when (saveLoadData.loadString(APP_LANGUAGE_CODE_KEY)) {
+                    "ru" -> articleFragment.setArticleData(models[absoluteAdapterPosition].article_link_ru,)
+                    "uk" -> articleFragment.setArticleData(models[absoluteAdapterPosition].article_link_uk,)
+                    "en" -> articleFragment.setArticleData(models[absoluteAdapterPosition].article_link_en,)
                 }
+                fragmentChanger.changeFragment(articleFragment)
             }
         }
     }

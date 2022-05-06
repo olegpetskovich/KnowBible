@@ -13,7 +13,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_VIBRATE
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity
-import com.app.bible.knowbible.utility.Utility
+import com.app.bible.knowbible.utility.Utils
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -26,11 +26,11 @@ class MyFirebaseCloudMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
 
         //Перейти по ссылке с объяснением, если уведомления не приходят: https://goo.gl/39bRNJ
-        Utility.log("From: " + remoteMessage.from)
+        Utils.log("From: " + remoteMessage.from)
 
         //Проверка пришедших данных на содержимость уведомления на наличие данных
         if (remoteMessage.data.isNotEmpty()) {
-            Utility.log("Message data payload: " + remoteMessage.data)
+            Utils.log("Message data payload: " + remoteMessage.data)
 
             //Этот фрагмент кода был в документации.
             //Он нужен в случае, если приходят данные, на обработку которых требуется много времени,
@@ -48,7 +48,7 @@ class MyFirebaseCloudMessagingService : FirebaseMessagingService() {
         //Проверка полученного уведомления из объекта data на наличие данных
         if (remoteMessage.data.isEmpty()) {
             if (remoteMessage.notification != null) {
-                Utility.log("Message Notification Body: " + remoteMessage.notification!!.body)
+                Utils.log("Message Notification Body: " + remoteMessage.notification!!.body)
 
                 if (remoteMessage.notification!!.title != null && remoteMessage.notification!!.body != null) {
                     makeNotification(getNotification(remoteMessage.notification!!.title!!, remoteMessage.notification!!.body!!))
