@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -32,6 +33,7 @@ import com.app.bible.knowbible.utility.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.ads.AdView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,6 +65,8 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     private lateinit var recyclerView: RecyclerView
     private var articlesRVAdapter: ArticlesRVAdapter? = null
 
+    private var banner: AdView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Utils.log("onCreate()")
@@ -81,6 +85,15 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
         recyclerView = myView.findViewById(R.id.recyclerView)
+
+        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
+        banner = AdView(requireContext())
+        adViewContainer.addView(banner)
+        App.instance.bannerAdLoader.loadBanner(
+            requireActivity(),
+            adViewContainer,
+            banner!!
+        )
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -168,6 +181,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     override fun onResume() {
         super.onResume()
         Utils.log("onResume()")
+        banner?.resume()
 
         if (articlesRVAdapter != null)
             articlesRVAdapter!!.notifyDataSetChanged()
@@ -188,6 +202,9 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     override fun onPause() {
         super.onPause()
         Utils.log("onPause()")
+
+        banner?.pause()
+
         listener.setShowHideArticlesInfoButton(View.GONE) //Устанавливаем видимость кнопки btnArticlesInfo
     }
 
@@ -199,12 +216,8 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
             GridLayoutManager(context, 2)
         else recyclerView.layoutManager = GridLayoutManager(context, 3)
 
-        //Этот вариант может понадобиться в случае, если будет настройка "Сохранить статьи локально"
-        //Получаем данные. Если данные ещё не закешированы, то получаем их с сети, если закешировано, то с локальной БД
-//        if (!context.getDatabasePath(ARTICLES_DATA_BASE_NAME).exists()) {
-
         if (App.articlesData == null) {
-            if (Utils.isNetworkAvailable(context)!!) { //Если интернет есть - грузим данные, если интернета нет, то работа метода прекращается вызовом return
+            if (Utils.isNetworkAvailable(context)) { //Если интернет есть - грузим данные, если интернета нет, то работа метода прекращается вызовом return
                 //Убираем swipeRefreshLayout в случае, когда интернет есть, чтобы пользователь не делал не нужных запросов и не тратил запас предоставленных ресурсов Firebase.
                 //То есть обновление списка можно только в случае отсутствия интернета
                 swipeRefreshLayout.isRefreshing = false
@@ -224,8 +237,7 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                         //а значит при попытке отобразить статью, приложение будет падать,
                         //поэтому если данные в CloudFirestore для статьи не заполнены - она удаляется из списка,
                         //чтобы приложение не падало из-за отстутствия данных
-                        articlesData =
-                            articlesData.filter { obj -> obj.new_article_text_color != null && obj.new_article_text_color.isNotEmpty() }
+                        articlesData = articlesData.filter { obj -> obj.new_article_text_color != null && obj.new_article_text_color.isNotEmpty() }
 
                         articlesData.reverse() //Переворачиваем список статей, чтобы последняя опубликованная статья была вверху списка
 
@@ -237,14 +249,9 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
                                     .asBitmap()
                                     .load(pictureUri)
                                     .into(object : CustomTarget<Bitmap>(700, 400) {
-                                        override fun onLoadCleared(placeholder: Drawable?) {
+                                        override fun onLoadCleared(placeholder: Drawable?) {}
 
-                                        }
-
-                                        override fun onResourceReady(
-                                            resource: Bitmap,
-                                            transition: Transition<in Bitmap>?
-                                        ) {
+                                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                                             articleModel.imageBitmap =
                                                 resource //Устаналиваем картинку в виде Bitmap, чтобы сразу отобразить в списке и сохранить в бд
                                             progressBarArticle.visibility = View.GONE
@@ -308,18 +315,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
             articlesRVAdapter!!.setFragmentChangerListener(this)
 
             recyclerView.adapter = articlesRVAdapter
-
-//            articlesViewModel = ViewModelProvider(this).get(ArticlesViewModel::class.java)
-//            articlesViewModel
-//                    .getArticles()
-//                    .observe(viewLifecycleOwner, Observer { articlesData ->
-//                        progressBar.visibility = View.GONE
-//                        val articlesRVAdapter = ArticlesRVAdapter(context, articlesData)
-//                        articlesRVAdapter.setRecyclerViewThemeChangerListener(this)
-//                        articlesRVAdapter.setFragmentChangerListener(this)
-//
-//                        recyclerView.adapter = articlesRVAdapter
-//                    })
         }
     }
 
