@@ -20,6 +20,7 @@ import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicat
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.SaveLoadData
 import com.app.bible.knowbible.utility.Utils
+import com.app.bible.knowbible.utility.Utils.Companion.hideKeyboard
 import com.google.android.material.button.MaterialButton
 import com.muddzdev.styleabletoast.StyleableToast
 
@@ -92,6 +93,8 @@ class AddEditNoteFragment : Fragment() {
                 isBtnSaveClicked = true
                 saveOrUpdateNote()
                 myFragmentManager.popBackStack() //Закрываем фрагмент
+
+                hideKeyboard(requireActivity())
             } else
                 StyleableToast.makeText(
                     requireContext(),
