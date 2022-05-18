@@ -16,7 +16,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class BibleTextDBHelper {
-    private lateinit var dataBase: SQLiteDatabase
+    private var dataBase: SQLiteDatabase? = null
     private val matthewBookNumber = 470 //Это код книги Евангелие Матфея в Базе Данных. С помощью этого номера будет определяться, данные какого завета возвращать по запросу.
     private lateinit var cv: ContentValues
 
@@ -24,18 +24,18 @@ class BibleTextDBHelper {
     fun openDatabase(dbPath: String): SQLiteDatabase {
         dataBase = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE)
         cv = ContentValues()
-        return dataBase
+        return dataBase!!
     }
 
     fun closeDatabase() {
-        dataBase.close()
+        dataBase?.close()
     }
 
     fun loadAllBooksList(tableName: String): Single<ArrayList<BookModel>> {
-        val cursor = dataBase.query(tableName, null, null, null, null, null, null)
+        val cursor = dataBase?.query(tableName, null, null, null, null, null, null)
         val mainCollection = ArrayList<BookModel>()
         val secondCollection = ArrayList<BookModel>()
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 val bookShortName = cursor.getString(cursor.getColumnIndex("short_name"))
@@ -58,7 +58,7 @@ class BibleTextDBHelper {
             mainCollection[index].number_of_chapters = enumBookChapters.numberOfChapters
         }
 
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<BookModel>> { mainCollection }
     }
 
@@ -68,10 +68,10 @@ class BibleTextDBHelper {
 //        } else {
 //            dataBase.query(tableName, null, "book_number >= ?", arrayOf(matthewBookNumber.toString()), null, null, null)
 //        }
-        val cursor = dataBase.query(tableName, null, null, null, null, null, null)
+        val cursor = dataBase?.query(tableName, null, null, null, null, null, null)
         val mainCollection = ArrayList<BookModel>()
         val secondCollection = ArrayList<BookModel>()
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 if (isOldTestament) {
@@ -118,16 +118,16 @@ class BibleTextDBHelper {
             mainCollection[index].number_of_chapters = enumBookChapters.numberOfChapters
         }
 
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<BookModel>> { mainCollection }
     }
 
     fun loadChaptersList(tableName: String, bookNumber: Int): Single<ArrayList<ChapterModel>> {
-        val cursor = dataBase.query(tableName, arrayOf("book_number", "chapter"), "book_number == ?", arrayOf(bookNumber.toString()), null, null, null)
+        val cursor = dataBase?.query(tableName, arrayOf("book_number", "chapter"), "book_number == ?", arrayOf(bookNumber.toString()), null, null, null)
         val collection = ArrayList<ChapterModel>()
 
         var chapterNumber = 0
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val chapter = cursor.getInt(cursor.getColumnIndex("chapter"))
 
@@ -139,12 +139,12 @@ class BibleTextDBHelper {
 
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<ChapterModel>> { collection }
     }
 
     fun loadAllBibleTexts(tableName: String): Single<ArrayList<BibleTextModel>> {
-        val cursor = dataBase.query(tableName,
+        val cursor = dataBase?.query(tableName,
                 null,
                 null,
                 null,
@@ -154,7 +154,7 @@ class BibleTextDBHelper {
 
         val allBibleTextsList: ArrayList<BibleTextModel> = ArrayList()
 
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 val chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -166,12 +166,12 @@ class BibleTextDBHelper {
 
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<BibleTextModel>> { allBibleTextsList }
     }
 
     fun loadBibleTextOfBook(tableName: String, myBookNumber: Int): Single<ArrayList<ArrayList<BibleTextModel>>> {
-        val cursor = dataBase.query(tableName,
+        val cursor = dataBase?.query(tableName,
                 null,
                 "book_number == ?",
                 arrayOf(myBookNumber.toString()),
@@ -183,7 +183,7 @@ class BibleTextDBHelper {
         var chapterTextList: ArrayList<BibleTextModel>? = null
 
         var myChapterNumber = 0
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 val chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -200,12 +200,12 @@ class BibleTextDBHelper {
             } while (cursor.moveToNext())
             chapterTextList?.let { collectionOfChaptersText.add(it) } //Поскольку коллекция добавляется в коллекцию в каждой следующей итерации, то последнюю коллекцию нужно добавлять после того, как отработал цикл. Может потом можно будет пересмотреть и сделать лучше.
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<ArrayList<BibleTextModel>>> { collectionOfChaptersText }
     }
 
     fun loadBibleTextOfChapter(tableName: String, myBookNumber: Int, myChapterNumber: Int): Single<ArrayList<BibleTextModel>> {
-        val cursor = dataBase.query(tableName,
+        val cursor = dataBase?.query(tableName,
                 null,
                 "book_number == ? AND chapter = ?",
                 arrayOf(myBookNumber.toString(), myChapterNumber.toString()),
@@ -215,7 +215,7 @@ class BibleTextDBHelper {
 
         val collection = ArrayList<BibleTextModel>()
 
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 val chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -226,12 +226,12 @@ class BibleTextDBHelper {
 
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<BibleTextModel>> { collection }
     }
 
     fun loadBibleVerse(tableName: String, myBookNumber: Int, myChapterNumber: Int, myVerseNumber: Int): Single<BibleTextModel> {
-        val cursor = dataBase.query(tableName,
+        val cursor = dataBase?.query(tableName,
                 null,
                 "book_number == ? AND chapter = ? AND verse = ?",
                 arrayOf(myBookNumber.toString(), myChapterNumber.toString(), myVerseNumber.toString()),
@@ -241,7 +241,7 @@ class BibleTextDBHelper {
 
         var verse: BibleTextModel? = null
 
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 val chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -252,7 +252,7 @@ class BibleTextDBHelper {
 
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<BibleTextModel> { verse }
     }
 
@@ -261,7 +261,7 @@ class BibleTextDBHelper {
         val highlightedVersesList = ArrayList<BibleTextModel>()
 
         for (highlightedTextInfo in highlightedTextsInfoList) {
-            val cursor = dataBase.query(tableName,
+            val cursor = dataBase?.query(tableName,
                     null,
                     "book_number == ? AND chapter = ? AND verse = ?",
                     arrayOf(highlightedTextInfo.bookNumber.toString(), highlightedTextInfo.chapterNumber.toString(), highlightedTextInfo.verseNumber.toString()),
@@ -270,7 +270,7 @@ class BibleTextDBHelper {
                     null)
 
 
-            if (cursor.moveToFirst()) {
+            if (cursor?.moveToFirst() == true) {
                 do {
                     val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                     val chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -290,7 +290,7 @@ class BibleTextDBHelper {
 
                 } while (cursor.moveToNext())
             }
-            cursor.close()
+            cursor?.close()
         }
         return Single.fromCallable<ArrayList<BibleTextModel>> { highlightedVersesList }
     }
@@ -299,7 +299,7 @@ class BibleTextDBHelper {
     fun loadDailyVerse(tableName: String, myBookNumber: Int, myChapterNumber: Int, myVersesNumbers: ArrayList<Int>): Single<DailyVerseModel> {
         val cursor: Cursor? =
                 if (myVersesNumbers.size == 1)
-                    dataBase.query(tableName,
+                    dataBase?.query(tableName,
                             null,
                             "book_number == ? AND chapter = ? AND verse = ?",
                             arrayOf(myBookNumber.toString(), myChapterNumber.toString(), myVersesNumbers[0].toString()),
@@ -307,7 +307,7 @@ class BibleTextDBHelper {
                             null,
                             null)
                 else
-                    dataBase.query(tableName,
+                    dataBase?.query(tableName,
                             null,
                             "book_number == ? AND chapter = ?",
                             arrayOf(myBookNumber.toString(), myChapterNumber.toString()),
@@ -320,7 +320,7 @@ class BibleTextDBHelper {
 
         val versesNumbers = ArrayList<Int>()
         var verseText = ""
-        if (cursor!!.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 chapterNumber = cursor.getInt(cursor.getColumnIndex("chapter"))
@@ -337,18 +337,18 @@ class BibleTextDBHelper {
             } while (cursor.moveToNext())
         }
 
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<DailyVerseModel> { DailyVerseModel(bookNumber, chapterNumber, -1, versesNumbers, verseText) }
     }
 
     @SuppressLint("CheckResult")
     fun loadSearchedBibleVerse(tableName: String, searchingSection: Int, searchingText: String): Single<ArrayList<BibleTextModel>> {
         val sql = "SELECT * FROM $tableName WHERE text LIKE '%$searchingText%'"
-        val cursor = dataBase.rawQuery(sql, null)
+        val cursor = dataBase?.rawQuery(sql, null)
 
         val verses: ArrayList<BibleTextModel> = ArrayList()
 
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
 
@@ -382,7 +382,7 @@ class BibleTextDBHelper {
                         }
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable<ArrayList<BibleTextModel>> { verses }
     }
 
@@ -393,11 +393,11 @@ class BibleTextDBHelper {
         Utils.log("Text before: " + bibleTextModel.text)
         Utils.log("Text after: $text")
 
-        dataBase.update("verses", cv, "book_number = ? AND chapter = ? AND verse = ?", arrayOf(bibleTextModel.book_number.toString(), bibleTextModel.chapter_number.toString(), bibleTextModel.verse_number.toString()))
+        dataBase?.update("verses", cv, "book_number = ? AND chapter = ? AND verse = ?", arrayOf(bibleTextModel.book_number.toString(), bibleTextModel.chapter_number.toString(), bibleTextModel.verse_number.toString()))
     }
 
     fun loadBookShortName(tableName: String, myBookNumber: Int): Single<String> {
-        val cursor = dataBase.query(tableName,
+        val cursor = dataBase?.query(tableName,
                 null,
                 null,
                 null,
@@ -406,7 +406,7 @@ class BibleTextDBHelper {
                 null)
 
         var shortName = ""
-        if (cursor.moveToFirst()) {
+        if (cursor?.moveToFirst() == true) {
             do {
                 val bookNumber = cursor.getInt(cursor.getColumnIndex("book_number"))
                 if (myBookNumber == bookNumber) {
@@ -416,7 +416,7 @@ class BibleTextDBHelper {
 
             } while (cursor.moveToNext())
         }
-        cursor.close()
+        cursor?.close()
         return Single.fromCallable { shortName }
     }
 }

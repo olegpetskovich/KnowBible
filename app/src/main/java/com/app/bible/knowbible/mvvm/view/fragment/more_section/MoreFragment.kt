@@ -37,11 +37,7 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val myView = inflater.inflate(R.layout.fragment_more, container, false)
-        listener.setTheme(
-            ThemeManager.theme,
-            false
-        ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
-
+        listener.setTheme(ThemeManager.theme, false) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
         saveLoadData = SaveLoadData(requireContext())
 
         myFragmentManager.let {
