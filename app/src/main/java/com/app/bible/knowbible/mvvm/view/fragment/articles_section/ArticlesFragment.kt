@@ -245,6 +245,8 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
                             val listRef = fireBaseStorage.reference.child(articleModel.image)
                             listRef.downloadUrl.addOnSuccessListener { pictureUri ->
+                                if (requireActivity().isDestroyed) return@addOnSuccessListener
+
                                 Glide.with(context)
                                     .asBitmap()
                                     .load(pictureUri)
