@@ -34,17 +34,6 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/adViewContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:minHeight="@dimen/_50sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBar" />
-
     <ProgressBar
         android:id="@+id/progressBarArticle"
         android:layout_width="60dp"

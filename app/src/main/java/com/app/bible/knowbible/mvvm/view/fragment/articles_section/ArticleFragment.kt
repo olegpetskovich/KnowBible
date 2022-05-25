@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -21,13 +20,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.app.bible.knowbible.App
 import com.app.bible.knowbible.R
 import com.app.bible.knowbible.mvvm.view.activity.MainActivity.Companion.tabArticlesNumber
 import com.app.bible.knowbible.mvvm.view.callback_interfaces.IActivityCommunicationListener
 import com.app.bible.knowbible.mvvm.view.theme_editor.ThemeManager
 import com.app.bible.knowbible.utility.Utils
-import com.google.android.gms.ads.AdView
 
 class ArticleFragment : Fragment() {
     private lateinit var listener: IActivityCommunicationListener
@@ -35,8 +32,6 @@ class ArticleFragment : Fragment() {
     private lateinit var webView: WebView
 
     private lateinit var myFragmentManager: FragmentManager
-
-    private var banner: AdView? = null
 
     private lateinit var articleLink: String
 
@@ -59,15 +54,6 @@ class ArticleFragment : Fragment() {
             ThemeManager.theme,
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
-
-        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
-        banner = AdView(requireContext())
-        adViewContainer.addView(banner)
-        App.instance.bannerAdLoader.loadBanner(
-            requireActivity(),
-            adViewContainer,
-            banner!!
-        )
 
         val progressBar: ProgressBar = myView.findViewById(R.id.progressBar)
 
@@ -153,8 +139,6 @@ class ArticleFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        banner?.resume()
-
         listener.setTabNumber(tabArticlesNumber)
         listener.setMyFragmentManager(myFragmentManager)
         listener.setIsBackStackNotEmpty(true)
@@ -164,10 +148,5 @@ class ArticleFragment : Fragment() {
         listener.setShowHideToolbarBackButton(View.VISIBLE)
 
         listener.setTvSelectedBibleTextVisibility(View.GONE)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        banner?.pause()
     }
 }

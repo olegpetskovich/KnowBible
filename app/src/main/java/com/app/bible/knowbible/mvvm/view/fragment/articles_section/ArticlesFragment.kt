@@ -65,7 +65,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     private lateinit var recyclerView: RecyclerView
     private var articlesRVAdapter: ArticlesRVAdapter? = null
 
-    private var banner: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,15 +84,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такой решение
         recyclerView = myView.findViewById(R.id.recyclerView)
-
-        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
-        banner = AdView(requireContext())
-        adViewContainer.addView(banner)
-        App.instance.bannerAdLoader.loadBanner(
-            requireActivity(),
-            adViewContainer,
-            banner!!
-        )
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -181,7 +171,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     override fun onResume() {
         super.onResume()
         Utils.log("onResume()")
-        banner?.resume()
 
         if (articlesRVAdapter != null)
             articlesRVAdapter!!.notifyDataSetChanged()
@@ -202,8 +191,6 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
     override fun onPause() {
         super.onPause()
         Utils.log("onPause()")
-
-        banner?.pause()
 
         listener.setShowHideArticlesInfoButton(View.GONE) //Устанавливаем видимость кнопки btnArticlesInfo
     }
@@ -245,37 +232,37 @@ class ArticlesFragment : Fragment(), IThemeChanger, IChangeFragment {
 
                             val listRef = fireBaseStorage.reference.child(articleModel.image)
                             listRef.downloadUrl.addOnSuccessListener { pictureUri ->
-                                if (requireActivity().isDestroyed) return@addOnSuccessListener
+                                if (!requireActivity().isDestroyed && isAdded) {
+                                    Glide.with(context)
+                                        .asBitmap()
+                                        .load(pictureUri)
+                                        .into(object : CustomTarget<Bitmap>(700, 400) {
+                                            override fun onLoadCleared(placeholder: Drawable?) {}
 
-                                Glide.with(context)
-                                    .asBitmap()
-                                    .load(pictureUri)
-                                    .into(object : CustomTarget<Bitmap>(700, 400) {
-                                        override fun onLoadCleared(placeholder: Drawable?) {}
+                                            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                                articleModel.imageBitmap =
+                                                    resource //Устаналиваем картинку в виде Bitmap, чтобы сразу отобразить в списке и сохранить в бд
+                                                progressBarArticle.visibility = View.GONE
+                                                layNoInternet.visibility = View.GONE
 
-                                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                            articleModel.imageBitmap =
-                                                resource //Устаналиваем картинку в виде Bitmap, чтобы сразу отобразить в списке и сохранить в бд
-                                            progressBarArticle.visibility = View.GONE
-                                            layNoInternet.visibility = View.GONE
+                                                val listSize = articlesData.size - 1
+                                                if (index == listSize) {
+                                                    articlesRVAdapter = ArticlesRVAdapter(
+                                                        context,
+                                                        articlesData as ArrayList<ArticleModel>
+                                                    )
+                                                    articlesRVAdapter!!.setRecyclerViewThemeChangerListener(
+                                                        this@ArticlesFragment
+                                                    )
+                                                    articlesRVAdapter!!.setFragmentChangerListener(this@ArticlesFragment)
+                                                    recyclerView.adapter = articlesRVAdapter
 
-                                            val listSize = articlesData.size - 1
-                                            if (index == listSize) {
-                                                articlesRVAdapter = ArticlesRVAdapter(
-                                                    context,
-                                                    articlesData as ArrayList<ArticleModel>
-                                                )
-                                                articlesRVAdapter!!.setRecyclerViewThemeChangerListener(
-                                                    this@ArticlesFragment
-                                                )
-                                                articlesRVAdapter!!.setFragmentChangerListener(this@ArticlesFragment)
-                                                recyclerView.adapter = articlesRVAdapter
-
-                                                App.articlesData =
-                                                    articlesData //Сохраняем данные в статическое поле, чтобы закешировать данные на время работы приложения. Это сэкономит количество делаемых запросов для получения данных. Один раз получили данные и они используется на протяжении всего времени, когда приложение включено.
+                                                    App.articlesData =
+                                                        articlesData //Сохраняем данные в статическое поле, чтобы закешировать данные на время работы приложения. Это сэкономит количество делаемых запросов для получения данных. Один раз получили данные и они используется на протяжении всего времени, когда приложение включено.
+                                                }
                                             }
-                                        }
-                                    })
+                                        })
+                                }
                             }
                         }
                     }
