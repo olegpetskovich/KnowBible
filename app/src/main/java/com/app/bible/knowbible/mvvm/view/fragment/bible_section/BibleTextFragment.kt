@@ -221,15 +221,6 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
             ).start()
         }
 
-        bibleDataViewModel
-            .getBookShortName(
-                BibleDataViewModel.TABLE_BOOKS,
-                chapterInfo?.bookNumber!!
-            )
-            .observe(viewLifecycleOwner) { shortName ->
-                listener.setTvSelectedBibleText("$shortName.", true)
-            }
-
         return myView
     }
 
@@ -270,6 +261,15 @@ class BibleTextFragment : Fragment(), IThemeChanger, ViewPager2Adapter.IFragment
         //хотя пользователь этого естественно не хотел(Потому что этот фрагмент может быть открыт в фоне, если юзер его открыл и перешёл в другой таб).
         //Надеюсь, логика понятна... Вибачайте, якшо по молдавському
         isBackButtonClicked = false
+
+        bibleDataViewModel
+            .getBookShortName(
+                BibleDataViewModel.TABLE_BOOKS,
+                chapterInfo?.bookNumber!!
+            )
+            .observe(viewLifecycleOwner) { shortName ->
+                listener.setTvSelectedBibleText("$shortName.", true)
+            }
 
         if (vpAdapter != null && viewPager2.adapter != null && viewPager2.adapter!!.itemCount != 0) {
             vpAdapter!!.dataToRestoreData = DataToRestoreModel(
