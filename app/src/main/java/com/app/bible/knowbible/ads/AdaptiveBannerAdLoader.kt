@@ -13,7 +13,7 @@ class AdaptiveBannerAdLoader(private val context: Context) {
 
     fun loadBanner(activity: Activity, adViewContainer: View, banner: AdView) {
         banner.adUnitId = context.getString(R.string.BANNER_AD_ID)
-        banner.adSize = getAdaptiveBannerSize(activity, adViewContainer)
+        banner.setAdSize(getAdaptiveBannerSize(activity, adViewContainer))
 
         val adRequest = AdRequest
             .Builder().build()

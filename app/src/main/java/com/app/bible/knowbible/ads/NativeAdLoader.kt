@@ -36,8 +36,8 @@ class NativeAdLoader(private val context: Context) {
                     nativeAdLiveDataValue.value = nativeAd
                 }
                 .withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(adError: LoadAdError?) {
-                        log("NATIVE Error message: " + adError.toString())
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        log("NATIVE Error message: $adError")
                     }
 
                     override fun onAdClicked() {
@@ -134,7 +134,7 @@ class NativeAdLoader(private val context: Context) {
         if (nativeAd.starRating == null) {
             adView.starRatingView?.visibility = View.INVISIBLE
         } else {
-            (adView.starRatingView as RatingBar).rating = nativeAd.starRating.toFloat()
+            (adView.starRatingView as RatingBar).rating = nativeAd.starRating!!.toFloat()
             adView.starRatingView?.visibility = View.VISIBLE
         }
         if (nativeAd.advertiser == null) {
