@@ -804,14 +804,14 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 
         if (isVisible) {
             //Открываем appBarLayout при включении режима множественного выбора
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) appBarLayout.setExpanded(
-                true,
-                false
-            )
-            else appBarLayout.setExpanded(
-                true,
-                true
-            ) //Открываем appBarLayout при включении режима множественного выбора
+//            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) appBarLayout.setExpanded(
+//                true,
+//                false
+//            )
+//            else appBarLayout.setExpanded(
+//                true,
+//                true
+//            ) //Открываем appBarLayout при включении режима множественного выбора
 
             animationBtnSelectTranslation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
 

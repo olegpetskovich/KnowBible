@@ -6,10 +6,279 @@
     android:layout_height="match_parent"
     tools:context="com.app.bible.knowbible.mvvm.view.activity.MainActivity">
 
+    <com.app.bible.knowbible.mvvm.view.theme_editor.MyToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnBack"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="12dp"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_arrow_back" />
+            <!-- Значение должно быть именно invisible, иначе появление стрелки будет осуществляться некорректно в некоторых фрагментах -->
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/quicksand_medium_eng"
+                android:text="@string/app_name"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:id="@+id/layTvSelectedBibleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="55dp"
+                android:layout_marginBottom="14dp"
+                android:layout_toStartOf="@id/btnHighlight"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                    android:id="@+id/tvSelectedBibleBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                    android:id="@+id/tvSelectedBibleChapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                    android:id="@+id/tvSelectedBibleVerse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Ниже блок кнопок для режима выбора нескольких стихов в BibleTextFragment -->
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnRemoveHighlight"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="-5dp"
+                android:layout_toStartOf="@id/btnHighlight"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_rubber"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnHighlight"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btnAddNote"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_highlight"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnAddNote"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btnCopy"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_write_note"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnCopy"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/btnShare"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_copy"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnShare"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_share"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
+                android:id="@+id/btnSelectTranslation"
+                style="@style/Widget.MaterialComponents.CardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:background="@android:color/transparent"
+                    android:orientation="horizontal">
+
+                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
+                        android:id="@+id/tvSelectTranslation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="SYNO"
+                        android:textAllCaps="true"
+                        android:textSize="17sp" />
+
+                    <ImageView
+                        android:id="@+id/ivSelectTranslation"
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/ic_keyboard_arrow" />
+                </LinearLayout>
+            </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
+
+            <!--                    <com.android.bible.knowbible.mvvm.view.theme_editor.MyButton-->
+            <!--                        android:id="@+id/btnSelectTranslation"-->
+            <!--                        style="@style/Widget.MaterialComponents.Button.TextButton"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_alignParentEnd="true"-->
+            <!--                        android:layout_centerVertical="true"-->
+            <!--                        android:layout_marginEnd="10dp"-->
+            <!--                        android:enabled="false"-->
+            <!--                        android:layoutDirection="rtl"-->
+            <!--                        android:textSize="17sp"-->
+            <!--                        android:visibility="invisible"-->
+            <!--                        app:cornerRadius="20dp"-->
+            <!--                        app:icon="@drawable/ic_keyboard_arrow"-->
+            <!--                        app:iconPadding="-8dp"-->
+            <!--                        app:iconSize="17dp" />-->
+
+            <!-- Не менять расположение кнопок btnDeleteNote и btnArticlesInfo -->
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnDeleteNote"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="14dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_delete_note"
+                android:visibility="gone" />
+
+            <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
+                android:id="@+id/btnShareNote"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="2dp"
+                android:layout_toStartOf="@id/btnDeleteNote"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="7dp"
+                android:src="@drawable/ic_share_filled"
+                android:visibility="gone" />
+
+            <!--                    <com.android.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
+            <!--                        android:id="@+id/btnArticlesInfo"-->
+            <!--                        android:layout_width="36dp"-->
+            <!--                        android:layout_height="36dp"-->
+            <!--                        android:layout_alignParentEnd="true"-->
+            <!--                        android:layout_centerVertical="true"-->
+            <!--                        android:layout_marginEnd="12dp"-->
+            <!--                        android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--                        android:clickable="true"-->
+            <!--                        android:focusable="true"-->
+            <!--                        android:src="@drawable/ic_articles_info"-->
+            <!--                        android:visibility="invisible" />-->
+
+            <!--                    <LinearLayout-->
+            <!--                        android:id="@+id/donationLay"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_alignParentEnd="true"-->
+            <!--                        android:layout_centerVertical="true"-->
+            <!--                        android:padding="2dp"-->
+            <!--                        android:layout_marginEnd="8dp"-->
+            <!--                        android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--                        android:clickable="true"-->
+            <!--                        android:focusable="true"-->
+            <!--                        android:orientation="horizontal"-->
+            <!--                        android:visibility="gone">-->
+
+            <!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
+            <!--                            android:id="@+id/ivDonate"-->
+            <!--                            android:layout_width="17dp"-->
+            <!--                            android:layout_height="17dp"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_marginEnd="6dp"-->
+            <!--                            app:srcCompat="@drawable/ic_donation" />-->
+
+            <!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView-->
+            <!--                            android:id="@+id/tvSupport"-->
+            <!--                            android:layout_width="wrap_content"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:text="@string/tv_support"-->
+            <!--                            android:textAllCaps="true"-->
+            <!--                            android:textSize="14sp" />-->
+
+            <!--                    </LinearLayout>-->
+
+        </RelativeLayout>
+    </com.app.bible.knowbible.mvvm.view.theme_editor.MyToolbar>
+
     <com.app.bible.knowbible.mvvm.view.theme_editor.MyCoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:orientation="vertical"
         tools:context="com.android.bible.knowbible.mvvm.view.activity.MainActivity">
 
@@ -19,277 +288,11 @@
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true">
 
-            <com.app.bible.knowbible.mvvm.view.theme_editor.MyToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnBack"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_margin="12dp"
-                        android:visibility="invisible"
-                        app:srcCompat="@drawable/ic_arrow_back" />
-                    <!-- Значение должно быть именно invisible, иначе появление стрелки будет осуществляться некорректно в некоторых фрагментах -->
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                        android:id="@+id/toolbarTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/quicksand_medium_eng"
-                        android:text="@string/app_name"
-                        android:textSize="22sp" />
-
-                    <LinearLayout
-                        android:id="@+id/layTvSelectedBibleText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="55dp"
-                        android:layout_marginBottom="14dp"
-                        android:layout_toStartOf="@id/btnHighlight"
-                        android:orientation="horizontal"
-                        android:visibility="invisible">
-
-                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                            android:id="@+id/tvSelectedBibleBook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="19sp"
-                            android:textStyle="bold" />
-
-                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                            android:id="@+id/tvSelectedBibleChapter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
-                            android:textSize="19sp"
-                            android:textStyle="bold" />
-
-                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                            android:id="@+id/tvSelectedBibleVerse"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:textSize="19sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Ниже блок кнопок для режима выбора нескольких стихов в BibleTextFragment -->
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnRemoveHighlight"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="-5dp"
-                        android:layout_toStartOf="@id/btnHighlight"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_rubber"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnHighlight"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/btnAddNote"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_highlight"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnAddNote"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/btnCopy"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_write_note"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnCopy"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@id/btnShare"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_copy"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnShare"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="8dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_share"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
-                        android:id="@+id/btnSelectTranslation"
-                        style="@style/Widget.MaterialComponents.CardView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="10dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="0dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="6dp"
-                            android:background="@android:color/transparent"
-                            android:orientation="horizontal">
-
-                            <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView
-                                android:id="@+id/tvSelectTranslation"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="SYNO"
-                                android:textAllCaps="true"
-                                android:textSize="17sp" />
-
-                            <ImageView
-                                android:id="@+id/ivSelectTranslation"
-                                android:layout_width="17dp"
-                                android:layout_height="17dp"
-                                android:layout_gravity="center_vertical"
-                                app:srcCompat="@drawable/ic_keyboard_arrow" />
-                        </LinearLayout>
-                    </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
-
-                    <!--                    <com.android.bible.knowbible.mvvm.view.theme_editor.MyButton-->
-                    <!--                        android:id="@+id/btnSelectTranslation"-->
-                    <!--                        style="@style/Widget.MaterialComponents.Button.TextButton"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_alignParentEnd="true"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginEnd="10dp"-->
-                    <!--                        android:enabled="false"-->
-                    <!--                        android:layoutDirection="rtl"-->
-                    <!--                        android:textSize="17sp"-->
-                    <!--                        android:visibility="invisible"-->
-                    <!--                        app:cornerRadius="20dp"-->
-                    <!--                        app:icon="@drawable/ic_keyboard_arrow"-->
-                    <!--                        app:iconPadding="-8dp"-->
-                    <!--                        app:iconSize="17dp" />-->
-
-                    <!-- Не менять расположение кнопок btnDeleteNote и btnArticlesInfo -->
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnDeleteNote"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="14dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@drawable/ic_delete_note"
-                        android:visibility="gone" />
-
-                    <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView
-                        android:id="@+id/btnShareNote"
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="2dp"
-                        android:layout_toStartOf="@id/btnDeleteNote"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:paddingStart="8dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="7dp"
-                        android:src="@drawable/ic_share_filled"
-                        android:visibility="gone" />
-
-<!--                    <com.android.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
-<!--                        android:id="@+id/btnArticlesInfo"-->
-<!--                        android:layout_width="36dp"-->
-<!--                        android:layout_height="36dp"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginEnd="12dp"-->
-<!--                        android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                        android:clickable="true"-->
-<!--                        android:focusable="true"-->
-<!--                        android:src="@drawable/ic_articles_info"-->
-<!--                        android:visibility="invisible" />-->
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/donationLay"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:padding="2dp"-->
-<!--                        android:layout_marginEnd="8dp"-->
-<!--                        android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                        android:clickable="true"-->
-<!--                        android:focusable="true"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:visibility="gone">-->
-
-<!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
-<!--                            android:id="@+id/ivDonate"-->
-<!--                            android:layout_width="17dp"-->
-<!--                            android:layout_height="17dp"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_marginEnd="6dp"-->
-<!--                            app:srcCompat="@drawable/ic_donation" />-->
-
-<!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView-->
-<!--                            android:id="@+id/tvSupport"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:text="@string/tv_support"-->
-<!--                            android:textAllCaps="true"-->
-<!--                            android:textSize="14sp" />-->
-
-<!--                    </LinearLayout>-->
-
-                </RelativeLayout>
-            </com.app.bible.knowbible.mvvm.view.theme_editor.MyToolbar>
-
             <com.app.bible.knowbible.mvvm.view.theme_editor.MyTabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorHeight="2dp"
