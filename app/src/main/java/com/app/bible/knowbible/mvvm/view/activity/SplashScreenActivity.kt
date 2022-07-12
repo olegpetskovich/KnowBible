@@ -26,7 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var saveLoadData: SaveLoadData
 
-    private val nativeLoader by lazy { (application as App).nativeAdLoader }
+//    private val nativeLoader by lazy { (application as App).nativeAdLoader }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +89,7 @@ class SplashScreenActivity : AppCompatActivity() {
         iV.startAnimation(animationLogo)
         iV.visibility = View.VISIBLE
 
-        nativeLoader.loadNativeAd()
+//        nativeLoader.loadNativeAd()
         val run1 = Thread {
             try {
                 Thread.sleep(1700)

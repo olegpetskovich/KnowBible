@@ -22,13 +22,13 @@ class App : Application() {
         const val EVENT_ADS_NO = "ADS_NO"
     }
 
-    val nativeAdLoader by lazy { NativeAdLoader(this) }
-    val bannerAdLoader by lazy { AdaptiveBannerAdLoader(this) }
+//    val nativeAdLoader by lazy { NativeAdLoader(this) }
+//    val bannerAdLoader by lazy { AdaptiveBannerAdLoader(this) }
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        MobileAds.initialize(this)
+//        MobileAds.initialize(this)
         FirebaseApp.initializeApp(this)
     }
 

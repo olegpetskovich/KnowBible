@@ -119,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="?attr/actionBarSize"
                 android:layout_weight="1"
                 tools:context="com.android.bible.knowbible.mvvm.view.fragment.bible_section.SelectTestamentFragment">
 
@@ -223,22 +224,22 @@
                 </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
             </LinearLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/_6sdp"
-                android:layout_marginBottom="@dimen/_40sdp"
-                android:layout_weight="1.6"
-                app:cardCornerRadius="@dimen/_8sdp"
-                app:cardElevation="@dimen/_2sdp"
-                app:cardUseCompatPadding="true">
+            <!--            <com.google.android.material.card.MaterialCardView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                android:layout_marginHorizontal="@dimen/_6sdp"-->
+            <!--                android:layout_marginBottom="@dimen/_40sdp"-->
+            <!--                android:layout_weight="1.6"-->
+            <!--                app:cardCornerRadius="@dimen/_8sdp"-->
+            <!--                app:cardElevation="@dimen/_2sdp"-->
+            <!--                app:cardUseCompatPadding="true">-->
 
-                <FrameLayout
-                    android:id="@+id/nativeAdFrame"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+            <!--                <FrameLayout-->
+            <!--                    android:id="@+id/nativeAdFrame"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent" />-->
 
-            </com.google.android.material.card.MaterialCardView>
+            <!--            </com.google.android.material.card.MaterialCardView>-->
 
         </LinearLayout>
     </LinearLayout>

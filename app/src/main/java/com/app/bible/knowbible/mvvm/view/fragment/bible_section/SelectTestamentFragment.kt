@@ -423,13 +423,13 @@ open class SelectTestamentFragment : Fragment(), DialogListener {
                     mainHandler.post(myRunnable)
                     saveLoadData.saveBoolean(TapTargetSelectTestamentFragment, true)
                 }
-                App.instance.nativeAdLoader.loadNativeAd()
-                App.instance.nativeAdLoader.nativeAdLiveData.observe(
-                    viewLifecycleOwner
-                ) { nativeAd ->
-                    if (nativeAd == null) return@observe
-                    App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
-                }
+//                App.instance.nativeAdLoader.loadNativeAd()
+//                App.instance.nativeAdLoader.nativeAdLiveData.observe(
+//                    viewLifecycleOwner
+//                ) { nativeAd ->
+//                    if (nativeAd == null) return@observe
+//                    App.instance.nativeAdLoader.showNativeAd(nativeAdFrame) //Показываем нативку
+//                }
             }
         }
         return myView

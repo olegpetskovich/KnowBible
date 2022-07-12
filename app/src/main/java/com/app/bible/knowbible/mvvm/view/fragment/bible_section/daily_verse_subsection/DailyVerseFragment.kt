@@ -62,7 +62,7 @@ class DailyVerseFragment : Fragment(), DialogListener {
     private lateinit var verseObject: BibleTextModel
     private lateinit var addVerseNoteDialog: AddVerseNoteDialog
 
-    private var banner: AdView? = null
+//    private var banner: AdView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,14 +81,14 @@ class DailyVerseFragment : Fragment(), DialogListener {
             false
         ) //Если не устанавливать тему каждый раз при открытии фрагмента, то по какой-то причине внешний вид View не обновляется, поэтому на данный момент только такое решение
 
-        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
-        banner = AdView(requireContext())
-        adViewContainer.addView(banner)
-        App.instance.bannerAdLoader.loadBanner(
-            requireActivity(),
-            adViewContainer,
-            banner!!
-        )
+//        val adViewContainer: FrameLayout = myView.findViewById(R.id.adViewContainer)
+//        banner = AdView(requireContext())
+//        adViewContainer.addView(banner)
+//        App.instance.bannerAdLoader.loadBanner(
+//            requireActivity(),
+//            adViewContainer,
+//            banner!!
+//        )
 
         ivBook = myView.findViewById(R.id.ivBook)
         tvVerse = myView.findViewById(R.id.tvVerse)
@@ -300,7 +300,7 @@ class DailyVerseFragment : Fragment(), DialogListener {
 
     override fun onResume() {
         super.onResume()
-        banner?.resume()
+//        banner?.resume()
 
         //Обновляем тему вьюшек в onResume, чтобы при смене темы и возврата к этому фрагменту, внешний вид вьюшек поменялся в соответствии с темой
         when (ThemeManager.theme) {
@@ -337,7 +337,7 @@ class DailyVerseFragment : Fragment(), DialogListener {
 
     override fun onPause() {
         super.onPause()
-        banner?.pause()
+//        banner?.pause()
     }
 
     override fun dismissDialog() {

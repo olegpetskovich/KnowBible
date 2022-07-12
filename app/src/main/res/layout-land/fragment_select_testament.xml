@@ -174,21 +174,21 @@
 
                 </com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/_6sdp"
-                    android:layout_weight="2"
-                    app:cardCornerRadius="@dimen/_8sdp"
-                    app:cardElevation="@dimen/_2sdp"
-                    app:cardUseCompatPadding="true">
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginHorizontal="@dimen/_6sdp"-->
+<!--                    android:layout_weight="2"-->
+<!--                    app:cardCornerRadius="@dimen/_8sdp"-->
+<!--                    app:cardElevation="@dimen/_2sdp"-->
+<!--                    app:cardUseCompatPadding="true">-->
 
-                    <FrameLayout
-                        android:id="@+id/nativeAdFrame"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/nativeAdFrame"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent" />-->
 
-                </com.google.android.material.card.MaterialCardView>
+<!--                </com.google.android.material.card.MaterialCardView>-->
 
                 <com.app.bible.knowbible.mvvm.view.theme_editor.MyCardView
                     android:id="@+id/btnNewTestament"
