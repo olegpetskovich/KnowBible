@@ -27,5 +27,11 @@
 {"book_number":680, "chapter_number":3, "verse_number":9, "verses_numbers":[]},
 {"book_number":100, "chapter_number":14, "verse_number":14, "verses_numbers":[]},
 {"book_number":330, "chapter_number":18, "verse_number":23, "verses_numbers":[]},
-{"book_number":330, "chapter_number":18, "verse_number":32, "verses_numbers":[]}
+{"book_number":330, "chapter_number":18, "verse_number":32, "verses_numbers":[]},
+{"book_number":90, "chapter_number":12, "verse_number":23, "verses_numbers":[]},
+{"book_number":10, "chapter_number":4, "verse_number":7, "verses_numbers":[]},
+{"book_number":470, "chapter_number":7, "verse_number":8, "verses_numbers":[]},
+{"book_number":570, "chapter_number":1, "verse_number":29, "verses_numbers":[]},
+{"book_number":510, "chapter_number":2, "verse_number":46, "verses_numbers":[]},
+{"book_number":520, "chapter_number":10, "verse_number":9, "verses_numbers":[]}
 ]
