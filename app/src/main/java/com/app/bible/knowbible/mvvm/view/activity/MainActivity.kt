@@ -13,6 +13,7 @@ import android.content.res.Configuration
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -380,6 +381,10 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
             //Эта проверка нужна для того, чтобы btnBack случайно не нажималась даже при видимости GONE, когда анимация пропадания ещё не успела сработать
             if (isBackStackNotEmpty)
                 onBackPressed()
+        }
+
+        ukrDonate.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.support_ukraine_link))))
         }
 
         btnSelectTranslation.setOnClickListener {
@@ -1020,28 +1025,28 @@ class MainActivity : AppCompatActivity(), BibleTextFragment.OnViewPagerSwipeStat
 //        btnArticlesInfo.startAnimation(animation)
     }
 
-    override fun setShowHideDonationLay(donationLayVisibility: Int) {
+    override fun setShowHideDonationLay(donationUkrVisibility: Int) {
 //        //Этот фрагмент кода нужен, чтобы donationLay не анимировался каждый раз при переходе между табами.
 //        //Если в одном табе установлена видимость такая же, как и в другом, то всё остаётся на своих местах и ничего не анимируется.
 //        //Анимирование происходит только в том случае, когда значение btnDonationLayVisibility меняется
-//        val btnDonationLayVisibility = donationLay.visibility
-//        if (btnDonationLayVisibility == donationLayVisibility) {
-//            return
-//        }
-//
-//        val animation: Animation?
-//        if (donationLayVisibility == View.VISIBLE) {
-//            donationLay.visibility = View.VISIBLE
-//            donationLay.isEnabled = true
-//            animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-//        } else {
-//            donationLay.visibility = View.GONE
-//            donationLay.isEnabled =
-//                false //Нужно отключать кнопку, потому что в противном случае по какой-то причине кнопка продолжает нажиматься даже с видимостью GONE
-//            animation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-//        }
-//        clearAnimation(animation, donationLay)
-//        donationLay.startAnimation(animation)
+        val btnDonationLayVisibility = ukrDonate.visibility
+        if (btnDonationLayVisibility == donationUkrVisibility) {
+            return
+        }
+
+        val animation: Animation?
+        if (donationUkrVisibility == View.VISIBLE) {
+            ukrDonate.visibility = View.VISIBLE
+            ukrDonate.isEnabled = true
+            animation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        } else {
+            ukrDonate.visibility = View.GONE
+            ukrDonate.isEnabled =
+                false //Нужно отключать кнопку, потому что в противном случае по какой-то причине кнопка продолжает нажиматься даже с видимостью GONE
+            animation = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        }
+        clearAnimation(animation, ukrDonate)
+        ukrDonate.startAnimation(animation)
     }
 
     override fun setShowHideAddNoteButtonFAB(addNoteFABBtnVisibility: Int) {

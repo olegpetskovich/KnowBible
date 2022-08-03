@@ -238,38 +238,19 @@
             <!--                        android:src="@drawable/ic_articles_info"-->
             <!--                        android:visibility="invisible" />-->
 
-            <!--                    <LinearLayout-->
-            <!--                        android:id="@+id/donationLay"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_alignParentEnd="true"-->
-            <!--                        android:layout_centerVertical="true"-->
-            <!--                        android:padding="2dp"-->
-            <!--                        android:layout_marginEnd="8dp"-->
-            <!--                        android:background="?attr/selectableItemBackgroundBorderless"-->
-            <!--                        android:clickable="true"-->
-            <!--                        android:focusable="true"-->
-            <!--                        android:orientation="horizontal"-->
-            <!--                        android:visibility="gone">-->
-
-            <!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyIconImageView-->
-            <!--                            android:id="@+id/ivDonate"-->
-            <!--                            android:layout_width="17dp"-->
-            <!--                            android:layout_height="17dp"-->
-            <!--                            android:layout_gravity="center_vertical"-->
-            <!--                            android:layout_marginEnd="6dp"-->
-            <!--                            app:srcCompat="@drawable/ic_donation" />-->
-
-            <!--                        <com.app.bible.knowbible.mvvm.view.theme_editor.MyTextView-->
-            <!--                            android:id="@+id/tvSupport"-->
-            <!--                            android:layout_width="wrap_content"-->
-            <!--                            android:layout_height="wrap_content"-->
-            <!--                            android:layout_gravity="center_vertical"-->
-            <!--                            android:text="@string/tv_support"-->
-            <!--                            android:textAllCaps="true"-->
-            <!--                            android:textSize="14sp" />-->
-
-            <!--                    </LinearLayout>-->
+            <ImageView
+                android:id="@+id/ukrDonate"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_ukraine" />
 
         </RelativeLayout>
     </com.app.bible.knowbible.mvvm.view.theme_editor.MyToolbar>

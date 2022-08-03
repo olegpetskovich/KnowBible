@@ -26,7 +26,7 @@ interface IActivityCommunicationListener {
     fun sendMultiSelectedTextsData(multiSelectedTextsList: ArrayList<BibleTextModel>)
 
     fun setShowHideArticlesInfoButton(articlesInfoBtnVisibility: Int)
-    fun setShowHideDonationLay(donationLayVisibility: Int)
+    fun setShowHideDonationLay(donationUkrVisibility: Int)
     fun setShowHideAddNoteButtonFAB(addNoteFABBtnVisibility: Int)
     fun setShowHideNoteButtons(noteBtnVisibility: Int)
 
